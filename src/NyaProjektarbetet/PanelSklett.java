@@ -1,0 +1,639 @@
+package NyaProjektarbetet;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Image;
+//import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
+import java.util.Map.Entry;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+
+
+//import java.awt.Image;
+import javax.swing.JTextField;
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+/*
+import minTestzon.Center;
+import minTestzon.GameEngine;
+import minTestzon.Garden;
+import minTestzon.GardenController;
+import minTestzon.Inventory;
+import minTestzon.MiniGame;
+import minTestzon.Room;
+import minTestzon.Shop;
+import minTestzon.UserInterface;*/
+
+
+public class PanelSklett implements Observer{
+	private GameEngine engine;
+	private JPanel panelClickable;
+	private UserInterface ui;
+	private ShopController shopControl;
+	private ArrayList<JButton> itemButtons = new ArrayList<JButton>();
+	private Inventory inventoryItems = new Inventory();
+	
+	/*public Room center;
+	public Room shop;
+	public Room garden;
+	public Room miniGame1;
+	public Room miniGame2;*/
+
+	public GardenController gardenController;
+	public Inventory in = new Inventory();
+	JButton itemsLeft = null;
+	
+	//*******Experiment
+	JButton kurt;
+	String ex;
+	
+	
+	public PanelSklett(GameEngine e, UserInterface ui)
+	{
+		engine = e;
+		this.ui = ui;
+		/*center = new Center();		//har flyttat dessa till gameengine istället
+		garden = new Garden();		
+		miniGame1 = new MiniGame();	*/
+		shopControl = new ShopController(engine, this);
+		/*
+		center = new Center();
+		shop = new Shop();
+		garden = new Garden();
+		miniGame1 = new MiniGame();*/
+
+		gardenController = new GardenController(e.userInventory, engine);
+		gardenController.addObserver(this);
+		
+		//engine.getPlayer().myInventory
+	}
+	
+	/*
+	private JPanel getInventoryPanel()
+	{
+		panelClickable = createInventoryPanel();
+		return panelClickable;
+		
+	}*/
+	
+	 private void reSize(int windowchanges)
+	 {
+		 
+	 }
+	
+	public JPanel getPanel(String current)
+	{
+		if(current.equals("center")) panelClickable = createCenterPanel();
+		else if(current.equals("shop")) panelClickable = createShopPanel();
+		else if(current.equals("garden")) panelClickable = createGardenPanel();
+		else panelClickable = createMiniGamePanel();
+		
+		return panelClickable;
+	}
+	
+	private JPanel createCenterPanel()
+	{
+	   	JPanel panel = new JPanel();    
+	    panel.setOpaque(false);
+	    //panel.setLayout(new GridLayout(4,4));
+	    panel.setLayout(null);
+	    
+
+	    //Tar in skyltbilden, skalar om den, sätter som ikon till JButton
+    	URL imageURL = this.getClass().getClassLoader().getResource("skylt.png");
+    	ImageIcon icon = new ImageIcon(imageURL);
+	    Image img = icon.getImage();
+	    Image newimg = img.getScaledInstance(200, 100,  java.awt.Image.SCALE_SMOOTH);
+	    ImageIcon newIcon = new ImageIcon(newimg);
+	    
+	    JButton clickButton = new JButton ("Affär", newIcon);
+	    clickButton.setHorizontalTextPosition(JButton.CENTER);
+	    clickButton.setVerticalTextPosition(JButton.CENTER);
+	    
+	    clickButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//ui.changeRoom("shop");					//strängar ist. för rumsreferenser
+				//engine.changeCurrentRoom(engine.shop);	//rumsreferenser ist. för strängar
+				engine.changeRoom("shop");				//flyttat till engine
+				
+			}
+		});
+	    clickButton.setBounds(200,100,200,100); //x,y,width,height
+	    clickButton.setContentAreaFilled(false);
+	    //clickButton.setBorderPainted(false); //med eller utan kant
+	    panel.add(clickButton);
+	    
+	    JButton clickButton2 = new JButton ("Trädgård");
+	    clickButton2.setBounds(300,400,200,200);
+	    clickButton2.setContentAreaFilled(false);
+	    //clickButton.setBorderPainted(false); //med eller utan kant
+	    panel.add(clickButton2);
+	    
+	    clickButton2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//ui.changeRoom("garden");					//strängar ist. för rumsreferenser
+				//engine.changeCurrentRoom(engine.garden);	//rumsreferenser ist. för strängar
+				engine.changeRoom("garden");				//flyttat till engine
+				
+			}
+		});
+	    
+	   	    
+	    return panel;
+    
+    
+	}
+	
+//*************************************************************************************************
+//*************************************SHOP-PANEL START*********************************************
+//*************************************************************************************************
+	private JPanel createShopPanel()
+	{
+		HashMap<Item, Boolean> shopItems = engine.shop.getShopItems();
+		
+		//**************************Skapa paneler**************************
+		JPanel panel = new JPanel();    
+		JPanel gridPanel = new JPanel(); 
+		JPanel downPanel = new JPanel(); 
+		
+	    panel.setOpaque(false);
+	    gridPanel.setOpaque(false);
+	    downPanel.setOpaque(false);
+	    
+	    panel.setLayout(new BorderLayout());
+	    downPanel.setLayout(new GridLayout(1,10));
+	    gridPanel.setLayout(new GridLayout(5,5,40,40));
+	    
+	    downPanel.setPreferredSize(new Dimension(100, 100)); 
+	    
+	    
+	    //**************************Skapa knappar**************************
+	    //Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
+	    
+	    for(Item item : shopItems.keySet() ){ 
+	    	URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
+	    	ImageIcon icon = new ImageIcon(imageURL);
+	    	JButton tempButton = new JButton (item.getItemName(), icon);
+	    	tempButton.setContentAreaFilled(false);
+	    	tempButton.setBorderPainted(false);
+
+	    	
+	    	tempButton.addActionListener(new ActionListener()  {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String clickedItem = new String();			//Sträng för att spara namnet på det man klickat på
+					for(JButton button : itemButtons){			//Letar igenom vilken knapp man klickat på
+						if(arg0.getSource().equals(button)){	//När knappen hittats...
+							clickedItem = button.getText();		//...så sparar man föremålets namn för den knappen
+						}
+					}
+					String inputValue = JOptionPane.showInputDialog("Hur många vill du köpa?");
+					shopControl.buyControl(inputValue, clickedItem);	//Startar controllern med föremålet samt antal
+				}
+			});
+	    	
+	    	gridPanel.add(tempButton);	//lägger till knappen
+	    	itemButtons.add(tempButton); //sparar knappen i en arraylist för att man ska kunna leta igenom knapparna
+		}
+	    
+	  //**************************Skapa tomma knappar för resten av utrymmena**************************
+	    int buffer = 25 - shopItems.size();
+	    int j = 0;
+	    for(j = 1; j <= buffer; j++ ){ //lägger till tomma knappar för att fylla skärmen
+	    	JButton tempButton = new JButton ("Item nr " + j);
+	    	tempButton.setContentAreaFilled(false);
+	    	tempButton.setBorderPainted(false);
+	    	gridPanel.add(tempButton);
+	    	itemButtons.add(tempButton); //för att kunna iterera genom knapparna, om det behövs senare...
+		}
+	    
+	  //**************************Övriga menyknappar etc**************************
+	    JButton centrumButton = new JButton ("Tillbaka till centrum");
+	    centrumButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//ui.changeRoom("center");
+				//engine.changeCurrentRoom(engine.center);		//rumsreferenser ist. för strängar
+				engine.changeRoom("center");				//flyttat till engine
+				
+			}
+		});
+	    centrumButton.setContentAreaFilled(false);
+	    //centrumButton.setBounds(4,6,100,200);
+	    //centrumButton.setBorderPainted(false); //med eller utan kant
+	    downPanel.add(centrumButton);
+	    
+	    JButton gardenButton = new JButton ("Till trädgården");
+	    gardenButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//ui.changeRoom("garden");
+				//engine.changeCurrentRoom(engine.garden);		//rumsreferenser ist. för strängar
+				engine.changeRoom("garden");				//flyttat till engine
+				
+			}
+		});
+	    gardenButton.setContentAreaFilled(false);
+	    //gardenButton.setBounds(4,6,100,200);
+	    //gardenButton.setBorderPainted(false); //med eller utan kant
+	    downPanel.add(gardenButton);
+	    
+	    JButton inventoryButton = new JButton ("Ryggsäck");
+	    inventoryButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				createInventoryPanel();
+				
+			}
+		});
+	    inventoryButton.setContentAreaFilled(false);
+	    //clickButton2.setBounds(300,400,200,200);
+	    //clickButton.setBorderPainted(false); //med eller utan kant
+	    downPanel.add(inventoryButton);
+	    
+	    panel.add(gridPanel, BorderLayout.CENTER);
+	    panel.add(downPanel, BorderLayout.SOUTH);
+
+	    return panel;
+	}
+//*************************************************************************************************
+//*************************************SHOP-PANEL END***********************************************
+//*************************************************************************************************
+	
+	
+	private JPanel createGardenPanel()
+	{
+		JPanel panel = new JPanel(); 
+		panel.setOpaque(false);
+	    panel.setLayout(null);
+	    JPanel showInventory;
+	    
+	    int rad = 0;
+	    int column =0;
+	    int lopnr=0;
+	    
+	    
+	    HashMap<Item, Integer> inventory = gardenController.getInventory();
+        Set<Entry<Item, Integer>> pairs = inventory.entrySet();
+	    
+	    // Det osynlliga rutnätet med knappar
+	    
+	    for( int j=0;j<43;j++){    	
+	    		    
+		    for( int i=0;i<23;i++)
+		    {
+		    	lopnr++;// Varje knapp får ett eget nummer			    		    
+			    final int nr = lopnr;
+			    
+			    String s = "buildable"; // Kom ihåg om det finns en tegelsten här eller inte...
+			    if(gardenController.getIcon(nr)!= null)  s= "unbuildable";
+			    final String startState = s;
+			    
+			    final ImageIcon icon3;
+			    //ImageIcon icon3;
+			    if (gardenController.getIcon(nr)!= null)
+			    {
+			    	//URL iconString = this.getClass().getClassLoader().getResource(gardenController.getIcon(nr));
+			    	//URL iconString = this.getClass().getClassLoader().getResource("pictures/BrickBlue.png");
+			    	//icon3 = new ImageIcon(gardenController.getIcon(nr));
+			    	//System.out.println("gardenController.getIcon(nr) är just nu = " +gardenController.getIcon(nr));
+			    	//icon3 = new ImageIcon(/*gardenController.getIcon(nr)*/"pictures/BrickBlue.png");
+			    	//System.out.println(("pictures/" + gardenController.getIcon(nr)));
+			    	icon3 = new ImageIcon("pictures/" + gardenController.getIcon(nr));
+			    	
+			    }
+			    else
+			    	icon3 =null;
+			    //final ImageIcon icon3 = new ImageIcon(iconString);
+			    
+			    
+			   /* if (this.getClass().getClassLoader().getResource(gardenController.getIcon(nr))!= null)
+			    {
+			    	iconString =this.getClass().getClassLoader().getResource(gardenController.getIcon(nr));
+			    	icon3= new ImageIcon(iconString);
+			    }
+		    		    
+			    else{  icon3 = null;}
+			    */
+			    //ImageIcon icon3 = new ImageIcon(gardenController.getIcon(nr));
+		    	
+		    				    
+			    final JButton clickButton = new JButton(icon3);
+			    //setResizable(false);// Testa senare
+			    clickButton.setBounds(column,rad,30,30);
+			    clickButton.setContentAreaFilled(false);//Osynlighet
+			    clickButton.setBorderPainted(false);//Osynlighet
+			    clickButton.addActionListener(new ActionListener() {
+			    	
+			    	String state = startState;
+			    	String takenImageString;
+			    	ImageIcon takenImage; 
+			    	//String state ="buildable";
+			    	@Override
+					public void actionPerformed(ActionEvent arg0) {
+			    		
+			    		
+						if(state.equals("buildable"))
+						{
+							takenImageString = gardenController.getTakenImage();
+							takenImage = new ImageIcon("pictures/" +takenImageString);
+							if(takenImage!=null)
+							{
+								state="unbuildable";
+								//System.out.println("Bilden som följde med till Panelskletts rutnät är: : " +takenImage );
+								clickButton.setIcon(takenImage);
+								gardenController.build(nr);
+								takenImage = null;
+							}
+														
+						}
+	
+						else if(state.equals("unbuildable"))
+					    {
+							state="buildable";
+							clickButton.setIcon(null);
+							clickButton.setContentAreaFilled(false);
+							gardenController.remove(nr);
+						}
+					}
+					
+			    });	
+					
+			    panel.add(clickButton);
+			    
+			    rad = rad + 30;
+			    			   	    		    
+		    }
+		   
+		    column = column + 30;
+		    rad =0;
+						   	    		    
+		}
+	  //*************************************Panelen vid sidan av rutnätet********************************************************** 	
+	    
+	    showInventory = new JPanel();
+	    showInventory.setLayout(null);
+	    showInventory.setBounds(1279,0, 81, 1000);
+	    
+	    // Nollställer för ny loop
+	     rad = 30;
+	     column = 30;
+	   
+	 
+	        
+	   
+	        //Fixar fram det som ska visas på sidopanelen
+	        for(Entry<Item, Integer> entry: pairs){
+	    	
+	    	// Visa bild på tillgänliga Item
+	        final Item item= entry.getKey();	
+	        
+	        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
+	    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
+	        	
+	    	//final ImageIcon imageOfItem = entry.getKey();
+	    	//System.out.println("imageOfItem i sidopanelen" +imageOfItem );
+	    	final JButton showItem;
+	    	showItem = new JButton(imageOfItem);
+		    showItem.setBounds(column, rad,30,30);
+		    
+		    //Vad bildknappen ska göra
+		    
+		    showItem.addActionListener(new ActionListener() {
+		    	    	
+		    	@Override
+				public void actionPerformed(ActionEvent arg0) {
+											
+						gardenController.take(item.getItemPicture());
+						//System.out.println("Tagen bild i sidopanelen är: " +imageOfItem );
+				}
+				
+		    });	
+		    
+		    // Visa antal  tillgänliga Items
+		    int x =entry.getValue();
+		    itemsLeft = new JButton();
+		    itemsLeft.setText("" + x);
+		    itemsLeft.setBounds(column-15, rad+30,60,30);
+		    itemsLeft.setContentAreaFilled(false);//Osynlighet
+		    itemsLeft.setBorderPainted(false);//Osynlighet
+		    
+		     
+		    //*****************************************************************
+		    
+		   
+		   		    
+		    //Lägg till bild och antal 
+		    showInventory.add(showItem);
+		    showInventory.add(itemsLeft);
+		    
+		    // Byt till ny position
+		    rad= rad +60;
+	    }
+	        
+	        //**************Experiment********************
+		   
+		    kurt = new JButton();
+		    kurt.setBounds(0,rad +30 ,100,30);
+		    kurt.setContentAreaFilled(false);//Osynlighet
+		    kurt.setBorderPainted(false);//Osynlighet
+		    
+		    showInventory.add(kurt);
+		    
+		    
+		   //*****************************************************************
+		    
+	     panel.add(showInventory);
+	     return panel;
+	     
+	}
+	
+	//*************************************************************************************************
+	//*************************************INVENTORY-PANEL START***************************************
+	//*************************************************************************************************
+	
+	
+	//Ganska klart förutom layouten
+		public void createInventoryPanel()
+		{
+			JFrame inventory = new JFrame("Ryggsäck");
+			//HashMap<Item, Integer> items = inventoryItems.getInventory();
+			HashMap<Item, Integer> items = engine.getPlayer().myInventory.getInventory();
+			
+			JPanelWithBackground invBG = new JPanelWithBackground("pictures/sno.jpg");
+			inventory.add(invBG);
+			invBG.setLayout(new GridLayout(4,4,1,1));
+			
+			
+			
+			for (Entry<Item, Integer> entry : items.entrySet() ) {
+			//for (HashMap.Entry<Item, Integer> entry : items.entrySet() ) {
+			    //Item item = entry.getKey();
+			    //Object amount = entry.getValue();
+				//ImageIcon iconapprove = new ImageIcon(entry.getKey().getItemPicture());
+				
+				URL imageURL = this.getClass().getClassLoader().getResource(entry.getKey().getItemPicture());
+				ImageIcon iconapprove = new ImageIcon(imageURL);
+				
+				JLabel imglabelapprove1 = new JLabel(entry.getValue().toString());
+			    imglabelapprove1.setIcon(iconapprove);
+			    imglabelapprove1.setHorizontalAlignment(JLabel.CENTER);
+			    invBG.add(imglabelapprove1);
+			}
+			
+			inventory.pack();
+			inventory.setVisible(true);
+		}
+	
+	
+	//*************************************************************************************************
+	//*************************************INVENTORY-PANEL END*****************************************
+	//*************************************************************************************************
+	
+	
+	
+	private JPanel createMiniGamePanel()
+	{
+		JPanel panel = new JPanel();
+		
+		panel.setOpaque(false);
+	    panel.setLayout(null);
+		
+		return panel;
+		
+	}
+	
+	public void update(Observable obj, Object arg)
+	{
+		if(obj instanceof GardenController && arg instanceof Integer)
+			itemsLeft.setText("" + arg);
+			kurt.setText("kvar:"+ arg);
+			
+	}
+	
+}
+	
+	
+	
+	
+	/*
+	private JPanel createGardenPanel()
+	{
+		JPanel panel = new JPanel(); 
+		panel.setOpaque(false);
+	    panel.setLayout(null);
+	    int rad = 0;
+	    int column =0;
+	    int i =0;
+	    int j = 0;
+	    
+	    for( j=0;j<43;j++){    	
+	    		    
+		    for( i=0;i<23;i++)
+		    {
+		    		   
+			    final JButton clickButton = new JButton ();
+			    clickButton.setContentAreaFilled(false);
+			    clickButton.setBounds(column,rad,30,30);
+			     
+			    clickButton.setBorderPainted(false);//Osynlig
+			    clickButton.addActionListener(new ActionListener() {
+			    	int option =1;
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						
+						if(option ==1){
+							option=0;
+							clickButton.setContentAreaFilled(true);
+						}
+	
+						else if(option ==0)
+					    {
+						option =1;
+						clickButton.setContentAreaFilled(false);
+						}
+						
+					}
+					
+			    });	
+					
+			    panel.add(clickButton);
+			    
+			    rad = rad + 30;
+			    			   	    		    
+		    }
+		    /*rad = 0;
+		    i=0;
+		    for( i=0;i<23;i++)
+		    {
+		    		   
+			    JButton clickButton = new JButton ();
+			    clickButton.setContentAreaFilled(false);
+			    clickButton.setBounds(30,rad,30,30);
+			    //clickButton.setContentAreaFilled(false); Synlig för tillfället så jag ser vad jag gör
+			    panel.add(clickButton);
+			    
+			    rad = rad + 30;
+			    			   	    		    
+		    }
+		    column = column + 30;
+		    i=0;
+		    rad =0;
+			 
+			   	    		    
+		}
+	   
+		    
+		return panel;
+			
+	}
+	
+	private JPanel createMiniGamePanel()
+	{
+		JPanel panelClickable = new JPanel();
+		
+		panelClickable.setOpaque(false);
+	    panelClickable.setLayout(null);
+		
+		return panelClickable;
+	}
+	
+	private JPanel createInventoryPanel()
+	{
+		panelClickable.setOpaque(false);
+	    panelClickable.setLayout(null);
+		
+		return panelClickable;
+	}
+	
+	
+}*/
+
+
