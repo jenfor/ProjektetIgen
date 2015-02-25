@@ -75,7 +75,7 @@ public class GameEngine {
 	    	System.out.println("" + gameState.getSavedPlayer().getMoney());
 	    	gameState.setStatePlayer(user);
 	    	gameState.setStateGarden(garden);
-	    	gameState.setStateInventory(user.myInventory);
+	    	gameState.setStateInventory(userInventory);
     		try{
     			//FileOutputStream saveFile = new FileOutputStream( "Libraries/Documents/sparat.sav" );
     			//ObjectOutputStream save = new ObjectOutputStream( saveFile );
@@ -102,6 +102,7 @@ public class GameEngine {
 
     	}
     	
+	    	
     	public void load(){
     		try{
     			
@@ -122,7 +123,7 @@ public class GameEngine {
     			if( !(gameState.getSavedPlayer().equals(user)) ){
     				user = gameState.getSavedPlayer();
     				garden = gameState.getSavedGarden();
-    				user.myInventory = gameState.getSavedInventory();
+    				userInventory = gameState.getSavedInventory();
     				JOptionPane.showMessageDialog( null, "Din sparfil har laddats in!","yay!",JOptionPane.OK_CANCEL_OPTION);
     			}
     			else{
@@ -183,7 +184,7 @@ public class GameEngine {
         minigame1 = new Room();
         //shop = new Room();
         //Shop shop = new Shop(user.myInventory.getInventory(), user); 	//shop som lokal variabel
-        shop = new Shop(user.myInventory.getInventory(), user);			//shop som instansvariabel, förmodligen att föredra
+        shop = new Shop(userInventory.getInventory(), user);			//shop som instansvariabel, förmodligen att föredra
 
         current = "center";		//startar spelet i centrum
     }
@@ -203,8 +204,8 @@ public class GameEngine {
 		 else room = minigame1;
 		 System.out.println(current);
 		 //gui.setJPanelWithBackground(room.getPicture(getCurrent()));
-		 //gui.setJPanelWithBackground(room.getPicture(current));
-		gui.setJPanelWithBackground("pictures/sno.jpg");
+		 gui.setJPanelWithBackground(room.getPicture(current));
+		 //gui.setJPanelWithBackground("pictures/sno.jpg");
 	 }
 	 
 	 

@@ -22,7 +22,8 @@ public class Inventory implements Serializable {
 	}
 	
 	public void updateInventory(Item item, Integer amount) {
-		items.put(item, amount);
+		int total = (items.get(item)) + amount;
+		items.put(item, total);
 	}
 	
 	private void createInventory(){

@@ -55,7 +55,9 @@ public class Shop extends Room{
 			JOptionPane.showMessageDialog(null, "Dina pengar innan köp: " + player.getMoney(), "Pengar", JOptionPane.INFORMATION_MESSAGE);
 			player.changeMoney((-1) * numberOfItems * boughtItem.getItemPrice()); 	//drar bort pengar från spelarens plånbok
 			JOptionPane.showMessageDialog(null, "Dina pengar efter köp: " + player.getMoney(), "Pengar", JOptionPane.INFORMATION_MESSAGE);
+			//player.myInventory.updateInventory(boughtItem, numberOfItems); 	//lägger till rätt antal föremål i ryggsäcken
 			player.myInventory.updateInventory(boughtItem, numberOfItems); 	//lägger till rätt antal föremål i ryggsäcken
+		
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "... men du har för lågt level.", "", JOptionPane.INFORMATION_MESSAGE);

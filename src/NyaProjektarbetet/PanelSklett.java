@@ -298,9 +298,13 @@ public class PanelSklett implements Observer{
 	    int column =0;
 	    int lopnr=0;
 	    
+	    //HashMap<Item, Integer> inventory = gardenController.getInventory();
 	    
-	    HashMap<Item, Integer> inventory = gardenController.getInventory();
+	    HashMap<Item, Integer> inventory = engine.userInventory.getInventory();
+	    
         Set<Entry<Item, Integer>> pairs = inventory.entrySet();
+        
+        System.out.println("Inventory i PanelSklett: " + inventory);
 	    
 	    // Det osynlliga rutnätet med knappar
 	    
@@ -437,7 +441,7 @@ public class PanelSklett implements Observer{
 		    });	
 		    
 		    // Visa antal  tillgänliga Items
-		    int x =entry.getValue();
+		    int x = entry.getValue();
 		    itemsLeft = new JButton();
 		    itemsLeft.setText("" + x);
 		    itemsLeft.setBounds(column-15, rad+30,60,30);
