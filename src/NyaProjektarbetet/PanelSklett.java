@@ -303,10 +303,10 @@ public class PanelSklett implements Observer{
 	    //HashMap<Item, Integer> inventory = gardenController.getInventory();
 	    
 	    HashMap<Item, Integer> inventory = engine.userInventory.getInventory();
+	    gardenController.setInventory(engine.userInventory);
 	    
         Set<Entry<Item, Integer>> pairs = inventory.entrySet();
         
-        System.out.println("Inventory i PanelSklett: " + inventory);
 	    
 	    // Det osynlliga rutnätet med knappar
 	    

@@ -22,7 +22,7 @@ public class GardenController extends Observable{
 	
 	public GardenController(Inventory in, GameEngine engine)
 	{
-		inventory = in.getInventory();
+		inventory = in.getInventory(); 
 		//gardenThis = engine.garden;
 		this.engine  = engine;
 			
@@ -115,7 +115,9 @@ public class GardenController extends Observable{
 	
 	public void build(int lopnr)
 	{
-		System.out.println("Inventory: " + inventory);
+		System.out.println("Inventory i PanelSklett: " + engine.userInventory.getInventory());
+        System.out.println("Inventory i GardenController: " + inventory);
+        
 		if(takenImage != null)
 		{
 			//System.out.println("takenItem är: : " +takenItem );
