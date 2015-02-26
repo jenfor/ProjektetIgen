@@ -49,6 +49,8 @@ public class PanelSklett implements Observer{
 	private ShopController shopControl;
 	private ArrayList<JButton> itemButtons = new ArrayList<JButton>();
 	private Inventory inventoryItems = new Inventory();
+	private int presentItem; 
+	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
 	
 	/*public Room center;
 	public Room shop;
@@ -405,6 +407,8 @@ public class PanelSklett implements Observer{
 	    showInventory.setLayout(null);
 	    showInventory.setBounds(1279,0, 81, 1000);
 	    
+	    int buttonNr=0;
+	    
 	    // Nollställer för ny loop
 	     rad = 30;
 	     column = 30;
@@ -414,7 +418,8 @@ public class PanelSklett implements Observer{
 	   
 	        //Fixar fram det som ska visas på sidopanelen
 	        for(Entry<Item, Integer> entry: pairs){
-	    	
+	        	buttonNr++;
+	        final int bNr = buttonNr;
 	    	// Visa bild på tillgänliga Item
 	        final Item item= entry.getKey();	
 	        
@@ -435,6 +440,7 @@ public class PanelSklett implements Observer{
 				public void actionPerformed(ActionEvent arg0) {
 											
 						gardenController.take(item.getItemPicture());
+						presentItem = bNr;
 						//System.out.println("Tagen bild i sidopanelen är: " +imageOfItem );
 				}
 				
@@ -447,6 +453,10 @@ public class PanelSklett implements Observer{
 		    itemsLeft.setBounds(column-15, rad+30,60,30);
 		    itemsLeft.setContentAreaFilled(false);//Osynlighet
 		    itemsLeft.setBorderPainted(false);//Osynlighet
+		    
+		    //Spara referens till just denna rutan
+		    
+		    panelButtons.put(buttonNr, itemsLeft);
 		    
 		     
 		    //*****************************************************************
@@ -536,8 +546,11 @@ public class PanelSklett implements Observer{
 	public void update(Observable obj, Object arg)
 	{
 		if(obj instanceof GardenController && arg instanceof Integer)
-			itemsLeft.setText("" + arg);
+		{
+			panelButtons.get(presentItem).setText("" + arg);
+			//itemsLeft.setText("" + arg);
 			kurt.setText("kvar:"+ arg);
+		}
 			
 	}
 	
