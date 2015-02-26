@@ -115,8 +115,9 @@ public class GardenController extends Observable{
 	
 	public void build(int lopnr)
 	{
+		/*
 		System.out.println("Inventory i PanelSklett: " + engine.userInventory.getInventory());
-        System.out.println("Inventory i GardenController: " + inventory);
+        System.out.println("Inventory i GardenController: " + inventory);*/
         
 		if(takenImage != null)
 		{

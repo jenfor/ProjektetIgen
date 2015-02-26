@@ -1,6 +1,7 @@
 package NyaProjektarbetet;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -21,9 +22,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+
+
 
 
 //import java.awt.Image;
@@ -185,6 +189,7 @@ public class PanelSklett implements Observer{
 	    gridPanel.setOpaque(false);
 	    downPanel.setOpaque(false);
 	    
+	    
 	    panel.setLayout(new BorderLayout());
 	    downPanel.setLayout(new GridLayout(1,10));
 	    gridPanel.setLayout(new GridLayout(5,5,40,40));
@@ -196,11 +201,47 @@ public class PanelSklett implements Observer{
 	    //Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
 	    
 	    for(Item item : shopItems.keySet() ){ 
-	    	URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
-	    	ImageIcon icon = new ImageIcon(imageURL);
+	    	
+	    	ImageIcon icon;
+	    	
+	    	if (shopControl.levelControl(item)){
+	    		URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
+		    	icon = new ImageIcon(imageURL);
+	    	}
+	    	else{
+	    		URL imageURL = this.getClass().getClassLoader().getResource("stop_sign.png");
+		    	icon = new ImageIcon(imageURL);
+	    	}
+	    	
+	    	/*URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
+	    	ImageIcon icon = new ImageIcon(imageURL);*/
 	    	JButton tempButton = new JButton (item.getItemName(), icon);
+	    	
+	    	JTextField itemText;
+	    	
+	    	if ( shopControl.levelControl(item)){
+	    		itemText = new JTextField("Pris: " + item.getItemPrice() + " kr\n Level: " + item.getItemLevel());
+	    	}
+	    	else{
+	    		itemText = new JTextField("Låses upp på level " + item.getItemLevel());
+	    	}
+	    	itemText.setHorizontalAlignment(JTextField.CENTER);
+	    	itemText.setEditable(false);
+	    	itemText.setOpaque(true);	
+	    	itemText.setBackground(Color.WHITE);
+	    	
+	    	
+	    	
+	    	
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
+	    	
+	    	JPanel itemGrid = new JPanel();
+	    	itemGrid.setOpaque(false);
+	    	itemGrid.setLayout(new GridLayout(2,1));
+	    	
+	    	itemGrid.add(tempButton);
+	    	itemGrid.add(itemText);
 
 	    	
 	    	tempButton.addActionListener(new ActionListener()  {
@@ -217,7 +258,10 @@ public class PanelSklett implements Observer{
 				}
 			});
 	    	
-	    	gridPanel.add(tempButton);	//lägger till knappen
+	    	//gridPanel.add(tempButton);	//lägger till knappen -------------------------------
+	    	//gridPanel.add(tempLabel);-------------------------------
+	    	
+	    	gridPanel.add(itemGrid);
 	    	itemButtons.add(tempButton); //sparar knappen i en arraylist för att man ska kunna leta igenom knapparna
 		}
 	    
@@ -225,7 +269,8 @@ public class PanelSklett implements Observer{
 	    int buffer = 25 - shopItems.size();
 	    int j = 0;
 	    for(j = 1; j <= buffer; j++ ){ //lägger till tomma knappar för att fylla skärmen
-	    	JButton tempButton = new JButton ("Item nr " + j);
+	    	//JButton tempButton = new JButton ("Item nr " + j);
+	    	JButton tempButton = new JButton ();
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
 	    	gridPanel.add(tempButton);
@@ -280,6 +325,7 @@ public class PanelSklett implements Observer{
 	    downPanel.add(inventoryButton);
 	    
 	    panel.add(gridPanel, BorderLayout.CENTER);
+	    
 	    panel.add(downPanel, BorderLayout.SOUTH);
 
 	    return panel;
