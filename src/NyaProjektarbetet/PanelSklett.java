@@ -51,6 +51,7 @@ public class PanelSklett implements Observer{
 	private Inventory inventoryItems = new Inventory();
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
+	private HashMap<String, Integer> rightPanel = new  HashMap<String, Integer>();
 	
 	/*public Room center;
 	public Room shop;
@@ -375,6 +376,7 @@ public class PanelSklett implements Observer{
 								//System.out.println("Bilden som följde med till Panelskletts rutnät är: : " +takenImage );
 								if(gardenController.getTakenImage()!=null)
 								{
+									checkRightPanel(takenImageString);
 									clickButton.setIcon(takenImage);
 									gardenController.build(nr);
 									takenImage = null;
@@ -387,6 +389,7 @@ public class PanelSklett implements Observer{
 						else if(state.equals("unbuildable"))
 					    {
 							state="buildable";
+							checkRightPanel(takenImageString);
 							clickButton.setIcon(null);
 							clickButton.setContentAreaFilled(false);
 							gardenController.remove(nr);
@@ -429,7 +432,8 @@ public class PanelSklett implements Observer{
 	        
 	        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
 	    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
-	        	
+	    	rightPanel.put(item.getItemPicture(), buttonNr);
+	    	
 	    	//final ImageIcon imageOfItem = entry.getKey();
 	    	//System.out.println("imageOfItem i sidopanelen" +imageOfItem );
 	    	final JButton showItem;
@@ -490,6 +494,26 @@ public class PanelSklett implements Observer{
 	     panel.add(showInventory);
 	     return panel;
 	     
+	}
+	
+	public void checkRightPanel(String picture)
+	{
+		if(gardenController.getTakenImage()!=(null))
+		{
+			
+		}
+		if( rightPanel.containsKey(picture))
+		{ 
+			int nr = rightPanel.get(picture);
+			if (presentItem!= nr)
+			{
+				presentItem = nr;
+			}
+			
+		}
+				
+	
+		
 	}
 	
 	//*************************************************************************************************
