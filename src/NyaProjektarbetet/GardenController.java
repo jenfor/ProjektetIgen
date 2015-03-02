@@ -101,15 +101,21 @@ public class GardenController extends Observable{
 		{
 			if(i.getItemPicture().equals(takenImage))
 			{
-				//if(inventory.get(takenImage)!=null)
-			    if(inventory.get(i/*takenImage*/)!=null)	
-			    return takenImage;
+				//if(inventory.get(takenImage)!=0 /*&& inventory.get(i/*takenImage*/)/*!=null)*/
+				//{
+					if(inventory.get(i/*takenImage*/)!=null)
+						if(inventory.get(i) > 0 )
+						{
+							return takenImage;
+						}
+				//}
+			    
 			}
 		}
 		
 			    /*else*/
 		//return null;
-		return "pictures/BrickBlue.png";
+		return null;
 		
 	}
 	

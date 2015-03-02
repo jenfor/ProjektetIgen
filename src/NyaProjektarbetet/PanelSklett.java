@@ -373,9 +373,13 @@ public class PanelSklett implements Observer{
 							{
 								state="unbuildable";
 								//System.out.println("Bilden som följde med till Panelskletts rutnät är: : " +takenImage );
-								clickButton.setIcon(takenImage);
-								gardenController.build(nr);
-								takenImage = null;
+								if(gardenController.getTakenImage()!=null)
+								{
+									clickButton.setIcon(takenImage);
+									gardenController.build(nr);
+									takenImage = null;
+								}
+								
 							}
 														
 						}
