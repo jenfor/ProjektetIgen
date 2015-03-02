@@ -26,6 +26,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 
+
 //import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -51,6 +52,7 @@ public class PanelSklett implements Observer{
 	private Inventory inventoryItems = new Inventory();
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
+	private ArrayList<JButton> gridButtons = new ArrayList<JButton>();
 	
 	/*public Room center;
 	public Room shop;
@@ -319,18 +321,14 @@ public class PanelSklett implements Observer{
 			    
 			    String s = "buildable"; // Kom ihåg om det finns en tegelsten här eller inte...
 			    if(gardenController.getIcon(nr)!= null)  s= "unbuildable";
+			    
 			    final String startState = s;
 			    
 			    final ImageIcon icon3;
 			    //ImageIcon icon3;
 			    if (gardenController.getIcon(nr)!= null)
 			    {
-			    	//URL iconString = this.getClass().getClassLoader().getResource(gardenController.getIcon(nr));
-			    	//URL iconString = this.getClass().getClassLoader().getResource("pictures/BrickBlue.png");
-			    	//icon3 = new ImageIcon(gardenController.getIcon(nr));
-			    	//System.out.println("gardenController.getIcon(nr) är just nu = " +gardenController.getIcon(nr));
-			    	//icon3 = new ImageIcon(/*gardenController.getIcon(nr)*/"pictures/BrickBlue.png");
-			    	//System.out.println(("pictures/" + gardenController.getIcon(nr)));
+			    	
 			    	icon3 = new ImageIcon("pictures/" + gardenController.getIcon(nr));
 			    	
 			    }
@@ -365,6 +363,7 @@ public class PanelSklett implements Observer{
 					public void actionPerformed(ActionEvent arg0) {
 			    		
 			    		
+			    		
 						if(state.equals("buildable"))
 						{
 							takenImageString = gardenController.getTakenImage();
@@ -373,9 +372,12 @@ public class PanelSklett implements Observer{
 							{
 								state="unbuildable";
 								//System.out.println("Bilden som följde med till Panelskletts rutnät är: : " +takenImage );
-								clickButton.setIcon(takenImage);
-								gardenController.build(nr);
-								takenImage = null;
+								if(gardenController.getTakenImage()!=null)
+								{
+									clickButton.setIcon(takenImage);
+									gardenController.build(nr);
+									takenImage = null;
+								}
 							}
 														
 						}
@@ -386,6 +388,8 @@ public class PanelSklett implements Observer{
 							clickButton.setIcon(null);
 							clickButton.setContentAreaFilled(false);
 							gardenController.remove(nr);
+							//presentItem = (Integer) null;
+							
 						}
 					}
 					

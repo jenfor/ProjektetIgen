@@ -89,8 +89,23 @@ public class GardenController extends Observable{
 	
 	public void take(String imageOfItem)
 	{
-		takenImage = imageOfItem;
-		//System.out.println("Bilden som följde med till GardenControllers take är: " +takenImage );
+		for(Item i: inventory.keySet())
+		{
+			if(i.getItemPicture().equals(imageOfItem))
+			{
+				
+				if(inventory.get(i) > 0 )
+				{
+					
+			
+					takenImage = imageOfItem;
+			
+			
+				}
+				else takenImage = null;
+				
+			}
+		}
 	}
 	
 	
@@ -101,28 +116,34 @@ public class GardenController extends Observable{
 		{
 			if(i.getItemPicture().equals(takenImage))
 			{
-				//if(inventory.get(takenImage)!=null)
-			    if(inventory.get(i/*takenImage*/)!=null)	
-			    return takenImage;
+				//if(inventory.get(takenImage)!=0 /*&& inventory.get(i/*takenImage*/)/*!=null)*/
+				//{
+					if(inventory.get(i/*takenImage*/)!=null)
+						if(inventory.get(i) > 0 )
+						{
+							return takenImage;
+						}
+				//}
+			    
 			}
 		}
 		
 			    /*else*/
 		//return null;
-		return "pictures/BrickBlue.png";
+		return null;
 		
 	}
 	
 	public void build(int lopnr)
 	{
-		System.out.println("Inventory i PanelSklett: " + engine.userInventory.getInventory());
-        System.out.println("Inventory i GardenController: " + inventory);
+		/*System.out.println("Inventory i PanelSklett: " + engine.userInventory.getInventory());
+        System.out.println("Inventory i GardenController: " + inventory);*/
         
 		if(takenImage != null)
 		{
 			//System.out.println("takenItem är: : " +takenItem );
 			//System.out.println("icon är: : " +icon );
-			engine.garden.addItem(lopnr, takenImage);
+			
 			//System.out.println("Nu är vi i build"+ lopnr);
 			
 			
@@ -131,14 +152,17 @@ public class GardenController extends Observable{
 			{
 				if(i.getItemPicture().equals(takenImage))
 				{
-			
-				    int nr = 0;
-				    //if(inventory.containsKey(takenImage)){
-					nr =inventory.get(i/*takenImage*/);
-					nr--;
-					setChanged();
-					notifyObservers(nr);
-					inventory.put(i/*takenImage*/, nr);
+					if(inventory.get(i) > 0 )
+					{
+						engine.garden.addItem(lopnr, takenImage);
+					    int nr = 0;
+					    //if(inventory.containsKey(takenImage)){
+						nr =inventory.get(i/*takenImage*/);
+						nr--;
+						setChanged();
+						notifyObservers(nr);
+						inventory.put(i/*takenImage*/, nr);
+					}
 				}
 		    }
 		
