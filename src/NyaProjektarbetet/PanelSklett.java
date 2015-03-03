@@ -55,6 +55,7 @@ public class PanelSklett implements Observer{
 	private Inventory inventoryItems = new Inventory();
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
+	private HashMap<Item, JButton> panelButtons2 = new  HashMap<Item, JButton>();
 	private HashMap<String, Integer> rightPanel = new  HashMap<String, Integer>();
 	//public JButton moneyLabel;
 	
@@ -67,6 +68,7 @@ public class PanelSklett implements Observer{
 	public GardenController gardenController;
 	public Inventory in = new Inventory();
 	JButton itemsLeft = null;
+	JButton itemsLeft2;
 	
 	//*******Experiment
 	JButton kurt;
@@ -89,6 +91,7 @@ public class PanelSklett implements Observer{
 
 		gardenController = new GardenController(e.userInventory, engine);
 		gardenController.addObserver(this);
+		engine.userInventory.addObserver(this);
 		
 		//engine.getPlayer().myInventory
 	}
@@ -200,7 +203,6 @@ public class PanelSklett implements Observer{
 	    
 	    //**************************Skapa knappar**************************
 	    //Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
-//Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
 	    
 	    for(Item item : shopItems.keySet() ){ 
 	    	
@@ -481,6 +483,7 @@ public class PanelSklett implements Observer{
 		    rad =0;
 						   	    		    
 		}
+	    
 	  //*************************************Panelen vid sidan av rutnätet********************************************************** 	
 	    
 	    showInventory = new JPanel();
@@ -498,58 +501,73 @@ public class PanelSklett implements Observer{
 	   
 	        //Fixar fram det som ska visas på sidopanelen
 	        for(Entry<Item, Integer> entry: pairs){
-	        	buttonNr++;
-	        final int bNr = buttonNr;
-	    	// Visa bild på tillgänliga Item
-	        final Item item= entry.getKey();	
-	        
-	        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
-	    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
-	    	rightPanel.put(item.getItemPicture(), buttonNr);
-	    	
-	    	//final ImageIcon imageOfItem = entry.getKey();
-	    	//System.out.println("imageOfItem i sidopanelen" +imageOfItem );
-	    	final JButton showItem;
-	    	showItem = new JButton(imageOfItem);
-		    showItem.setBounds(column, rad,30,30);
-		    
-		    //Vad bildknappen ska göra
-		    
-		    showItem.addActionListener(new ActionListener() {
-		    	    	
-		    	@Override
-				public void actionPerformed(ActionEvent arg0) {
-											
-						gardenController.take(item.getItemPicture());
-						presentItem = bNr;
-						//System.out.println("Tagen bild i sidopanelen är: " +imageOfItem );
-				}
-				
-		    });	
-		    
-		    // Visa antal  tillgänliga Items
-		    int x = entry.getValue();
-		    itemsLeft = new JButton();
-		    itemsLeft.setText("" + x);
-		    itemsLeft.setBounds(column-15, rad+30,60,30);
-		    itemsLeft.setContentAreaFilled(false);//Osynlighet
-		    itemsLeft.setBorderPainted(false);//Osynlighet
-		    
-		    //Spara referens till just denna rutan
-		    
-		    panelButtons.put(buttonNr, itemsLeft);
-		    
-		     
-		    //*****************************************************************
-		    
-		   
-		   		    
-		    //Lägg till bild och antal 
-		    showInventory.add(showItem);
-		    showInventory.add(itemsLeft);
-		    
-		    // Byt till ny position
-		    rad= rad +60;
+		        	buttonNr++;
+		        final int bNr = buttonNr;
+		    	// Visa bild på tillgänliga Item
+		        final Item item= entry.getKey();	
+		        
+		        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
+		    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
+		    	rightPanel.put(item.getItemPicture(), buttonNr);
+		    	
+		    	//final ImageIcon imageOfItem = entry.getKey();
+		    	//System.out.println("imageOfItem i sidopanelen" +imageOfItem );
+		    	final JButton showItem;
+		    	showItem = new JButton(imageOfItem);
+			    showItem.setBounds(column, rad,30,30);
+			    
+			    //Vad bildknappen ska göra
+			    
+			    showItem.addActionListener(new ActionListener() {
+			    	    	
+			    	@Override
+					public void actionPerformed(ActionEvent arg0) {
+												
+							gardenController.take(item.getItemPicture());
+							presentItem = bNr;
+							//System.out.println("Tagen bild i sidopanelen är: " +imageOfItem );
+					}
+					
+			    });	
+			    
+			    // Visa antal  tillgänliga Items
+			    int x = entry.getValue();
+			    itemsLeft = new JButton();
+			    itemsLeft.setText("" + x);
+			    itemsLeft.setBounds(column-15, rad+30,60,30);
+			    itemsLeft.setContentAreaFilled(false);//Osynlighet
+			    itemsLeft.setBorderPainted(false);//Osynlighet
+			    
+			    
+			    //***** Experiment: Visa antal  tillgänliga Items på annat sätt
+			    /*itemsLeft2 = new JButton();
+			    itemsLeft2.setText("" + entry.getValue());
+			    itemsLeft2.setBounds(column-2, rad+30,60,30);
+			    itemsLeft2.setContentAreaFilled(false);//Osynlighet
+			    itemsLeft2.setBorderPainted(false);//Osynlighet
+			    showInventory.add(itemsLeft2);*/
+			    
+			    
+			    
+			    
+			    
+			    
+			    //Spara referens till just denna rutan
+			    
+			    panelButtons.put(buttonNr, itemsLeft);
+			    panelButtons2.put(item, itemsLeft2);
+			    
+			     
+			    //*****************************************************************
+			    
+			   
+			   		    
+			    //Lägg till bild och antal 
+			    showInventory.add(showItem);
+			    showInventory.add(itemsLeft);
+			    
+			    // Byt till ny position
+			    rad= rad +60;
 	    }
 	        
 	        //**************Experiment********************
@@ -568,6 +586,7 @@ public class PanelSklett implements Observer{
 	     return panel;
 	     
 	}
+	
 	
 	public void checkRightPanel(String picture)
 	{
@@ -648,15 +667,24 @@ public class PanelSklett implements Observer{
 	
 	public void update(Observable obj, Object arg)
 	{
+		Item temp; //-------
+		temp = new Item(200, 2, "fish.png", "tomt item");
+		
 		if(obj instanceof GardenController && arg instanceof Integer)
 		{
 			panelButtons.get(presentItem).setText("" + arg);
 			//itemsLeft.setText("" + arg);
 			kurt.setText("kvar:"+ arg);
 		}
+		
+		if ( obj instanceof Inventory && arg instanceof Item ){
+			temp = (Item)arg;
+			if(panelButtons2.get(arg) != null)
+				panelButtons2.get(arg).setLabel("" + engine.userInventory.getInventory().get(temp));
+		}
+		
 			
 	}
-	
 }
 	
 	

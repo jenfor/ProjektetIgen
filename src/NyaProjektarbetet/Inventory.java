@@ -1,6 +1,7 @@
 package NyaProjektarbetet;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * 
@@ -9,7 +10,7 @@ import java.util.HashMap;
  *
  */
 
-public class Inventory implements Serializable {
+public class Inventory extends Observable implements Serializable {
 	private HashMap<Item, Integer> items;
 	
 	public Inventory() {
@@ -24,6 +25,8 @@ public class Inventory implements Serializable {
 	public void updateInventory(Item item, Integer amount) {
 		int total = (items.get(item)) + amount;
 		items.put(item, total);
+		setChanged();
+		notifyObservers(item);
 	}
 	
 	private void createInventory(){
