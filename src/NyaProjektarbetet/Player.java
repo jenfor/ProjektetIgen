@@ -1,8 +1,9 @@
 package NyaProjektarbetet;
 
 import java.io.Serializable;
+import java.util.Observable;
 
-public class Player implements Serializable {
+public class Player extends Observable implements Serializable {
 	private String userName;
 	private int level;
 	private int money;
@@ -45,5 +46,8 @@ public class Player implements Serializable {
 	
 	public void changeMoney(int value){ //value kan förstås vara både positivt och negativt
 		money = money + value;
+		//engine.gui.updateMoneyButton();	//player kan inte nå engine dock
+		setChanged();
+		notifyObservers(money);
 	}
 }

@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 
@@ -20,11 +22,12 @@ import javax.swing.*;
 /**
  * 
  */
-public class UserInterface {
+public class UserInterface implements Observer{
 	private GameEngine engine;
 	private JFrame myFrame;
 	private String image;
 	private JButton exitButton;
+	public JLabel moneyButton;
 	private JPanelWithBackground panel;
 	public PanelSklett invisPanels;
 	private JPanelWithBackground background;
@@ -40,6 +43,7 @@ public class UserInterface {
         //createGUI();
         //room = new Room();
         invisPanels = new PanelSklett(engine, this);
+        
     }
     
     public JFrame myFrame() {
@@ -111,11 +115,11 @@ public class UserInterface {
         menu = new JMenu("Meny");
         menu.setMnemonic(KeyEvent.VK_A);
         menu.getAccessibleContext().setAccessibleDescription(
-                "The only menu in this program that has menu items");
+                "Den enda menyn som innehåller något");
         menuBar.add(menu);
 
         //Nytt spel
-        menuItem = new JMenuItem("Nytt spel", new ImageIcon("images/middle.gif"));
+        menuItem = new JMenuItem("Nytt spel", new ImageIcon("pictures/small_star.gif"));
         menuItem.setMnemonic(KeyEvent.VK_B);
 		menuItem.addActionListener(new ActionListener() {
     		@Override
@@ -127,22 +131,27 @@ public class UserInterface {
 		menu.add(menuItem);
 
         //Öppna en sparad fil
-        menuItem = new JMenuItem("Öppna",
+		menuItem = new JMenuItem("Öppna", new ImageIcon("pictures/small_arrow.gif"));
+        menuItem.setMnemonic(KeyEvent.VK_T);
+        /*menuItem = new JMenuItem("Öppna",
                 KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_1, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription(
-                "Öppnar ditt spel (förhoppningsvis)");
+                "Öppnar ditt spel (förhoppningsvis)");*/
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+            	String name = JOptionPane.showInputDialog("Ladda spelare: ");
+            	engine.getPlayer().setUserName(name);
+    			engine.gameState.setStatePlayer(engine.getPlayer());
             	engine.load();
             }
         });
         menu.add(menuItem);
         
         //Spara en fil
-        menuItem = new JMenuItem("Spara", new ImageIcon("image.gif"));
+        menuItem = new JMenuItem("Spara", new ImageIcon("pictures/small_arrow.gif"));
         menuItem.setMnemonic(KeyEvent.VK_D);
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -154,7 +163,7 @@ public class UserInterface {
         
         //Avsluta
         menuItem = new JMenuItem("Avsluta",
-                                 new ImageIcon("images/middle.gif"));
+                                 new ImageIcon("pictures/small_cross.png"));
         menuItem.setMnemonic(KeyEvent.VK_B);
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -169,6 +178,7 @@ public class UserInterface {
 
 
         //Fler menydelar vi kanske kan vilja använda till något
+        /*
         menu.addSeparator();
         ButtonGroup group = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
@@ -204,13 +214,13 @@ public class UserInterface {
 
         menuItem = new JMenuItem("Another item");
         submenu.add(menuItem);
-        menu.add(submenu);
+        menu.add(submenu);*/
 
         //En andra meny i menyn
         menu = new JMenu("Inställningar");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
+                "Innehåller inget än");
         menuBar.add(menu);
 
         myFrame.setJMenuBar(menuBar);
@@ -219,7 +229,7 @@ public class UserInterface {
         menu = new JMenu("Hjälp");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription(
-                "This menu does nothing");
+                "Hjälpmeny");
         
         menuBar.add(menu);
         
@@ -244,6 +254,7 @@ public class UserInterface {
 	}
 	
 	 public void createGUI() {
+		 	engine.getPlayer().addObserver(this);
 		
 	        image ="pictures/startbackground.jpg";
 	        
@@ -274,19 +285,22 @@ public class UserInterface {
 	        
 	    }
 	 
+	 //***************************Spelmenyn med pengar, föremål etc*****************************
 	 private void addBorderLayout(JPanel pa, String current)
 	 {
+		 	
 		 	//int i = 0;
 		 	String nextRoom = "Centrum";
 		 	if("center".equals(current)){ nextRoom = "Affär";}
 		 	//final int j = i;
 		 	final String c = current;
 		 			 	
-		 	exitButton = new JButton("Exit");
+		 	exitButton = new JButton("Avsluta");
 	        JButton button2 = new JButton(nextRoom);
 	        JButton mapButton = new JButton("Karta");
 	        JButton itemButton = new JButton("Föremål");
-	        JButton moneyButton = new JButton("Pengar");
+	        //JButton moneyButton = new JButton("Pengar");
+	        moneyButton = new JLabel("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
 	        
 	        //String image ="pictures/startbackground.jpg";
 	                
@@ -305,15 +319,16 @@ public class UserInterface {
 	        JPanel p2 = new JPanel(new GridLayout(4,1));
 	        JPanel b = new JPanel();
 	        b.setLayout(new BoxLayout(b, BoxLayout.X_AXIS));
+	        //b.setBackground(Color.black);
 
 	        //p.add(button2);
 	        //p.add(mapButton);
 	        //p.add(exitButton);
-	        b.add(itemButton);
 	        b.add(moneyButton);
+	        b.add(itemButton);
 	        b.add(button2);
 	        b.add(mapButton);
-	        b.add(exitButton);
+	        //b.add(exitButton);
 	        
 	        panel.setLayout(new BorderLayout());
 	        //panel.add(textBox, BorderLayout.AFTER_LAST_LINE);
@@ -362,12 +377,13 @@ public class UserInterface {
 	            }
 	        });
 	        
+	        /*
 	        moneyButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
 	            	JOptionPane.showMessageDialog(null, "Du har " + engine.getPlayer().getMoney() + " kr.", "Pengar", JOptionPane.INFORMATION_MESSAGE);
 	            }
-	        });
+	        });*/
 	 }
 	 
 	 public void setJPanelWithBackground(String i)
@@ -381,6 +397,21 @@ public class UserInterface {
 		  myFrame.pack();
 		  //myFrame.setVisible(true);   
 	 }
+	 
+	 public void updateMoneyButton(){	//inte användbar just nu
+		 moneyButton.setText("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
+	 }
+	 
+	 public void update(Observable obj, Object arg)
+		{
+			if(obj instanceof Player && arg instanceof Integer){
+				moneyButton.setText("     Pengar: " + arg + " kr     ");
+				
+			}
+			
+			
+				
+		}
 	 
 	 /*
 	 public void changeRoom(String current)
