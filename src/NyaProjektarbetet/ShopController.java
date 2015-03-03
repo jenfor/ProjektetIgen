@@ -4,11 +4,11 @@ package NyaProjektarbetet;
 import javax.swing.JOptionPane;
 
 public class ShopController {
-    private PanelSklett view;
+    //private PanelSklett view;
     private GameEngine engine;
 
     ShopController(GameEngine engine, PanelSklett view) {
-        this.view  = view;		//view är alltså panelskelettet
+        //this.view  = view;		//view är alltså panelskelettet
         this.engine  = engine;	//via engine kommer man åt shop, som är model
     }
     

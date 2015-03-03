@@ -49,10 +49,9 @@ import minTestzon.UserInterface;*/
 public class PanelSklett implements Observer{
 	private GameEngine engine;
 	private JPanel panelClickable;
-	private UserInterface ui;
-	private ShopController shopControl;
+	//private UserInterface ui;
 	private ArrayList<JButton> itemButtons = new ArrayList<JButton>();
-	private Inventory inventoryItems = new Inventory();
+	//private Inventory inventoryItems = new Inventory();
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
 	private HashMap<Item, JButton> panelButtons2 = new  HashMap<Item, JButton>();
@@ -65,10 +64,11 @@ public class PanelSklett implements Observer{
 	public Room miniGame1;
 	public Room miniGame2;*/
 
+	private ShopController shopControl;
 	public GardenController gardenController;
-	public Inventory in = new Inventory();
-	JButton itemsLeft = null;
-	JButton itemsLeft2;
+	//public Inventory in = new Inventory();
+	public JButton itemsLeft = null;
+	public JButton itemsLeft2;
 	
 	//*******Experiment
 	JButton kurt;
@@ -78,7 +78,7 @@ public class PanelSklett implements Observer{
 	public PanelSklett(GameEngine e, UserInterface ui)
 	{
 		engine = e;
-		this.ui = ui;
+		//this.ui = ui;
 		/*center = new Center();		//har flyttat dessa till gameengine istället
 		garden = new Garden();		
 		miniGame1 = new MiniGame();	*/
@@ -104,10 +104,11 @@ public class PanelSklett implements Observer{
 		
 	}*/
 	
+	/*
 	 private void reSize(int windowchanges)
 	 {
 		 
-	 }
+	 }*/
 	
 	public JPanel getPanel(String current)
 	{

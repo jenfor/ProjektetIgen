@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 public class GardenController extends Observable{
 	
 	//Room garden;
-	ImageIcon itemIcon;
-	int nrOfItem;
+	//ImageIcon itemIcon;
+	//int nrOfItem;
 	String takenImage;
 	GameEngine engine;
 	//HashMap<ImageIcon, Integer> inventory = fuskaFramHashMap();// Tillfällig  map när jag jobbar utan inventory Icon ska egentligen var Item
