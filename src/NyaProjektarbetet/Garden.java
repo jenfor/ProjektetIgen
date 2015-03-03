@@ -11,7 +11,7 @@ public class Garden extends Room implements Serializable{
 	
 	public HashMap<Integer, String> gardenItems; //där Integer är löpnummer och String Items bild 
 	
-	private Item gardenItem;
+	//private Item gardenItem;
 	private String gardenPicture;
 	
 	public Garden(){

@@ -31,9 +31,10 @@ public class Player extends Observable implements Serializable {
 		return level;
 	}
 	
+	/*
 	public void setLevel(int newLevel){
 		level = newLevel;
-	}
+	}*/
 	
 	//eventuell metod för att levla upp beroende på hur levlandet ska fungera
 	public void levelUp(){

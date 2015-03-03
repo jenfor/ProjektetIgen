@@ -16,7 +16,7 @@ public class GameEngine {
 	private UserInterface gui;
 	//Current room:
 	private String current;
-	private Room currentRoom;
+	//private Room currentRoom;
 	//Rum:
 	public Shop shop;
 	public Room center, garden, minigame1;
@@ -145,9 +145,10 @@ public class GameEngine {
 		return current;
 	}
 	
+	/*
 	public Room getCurrentRoom() {	//som getCurrent fast med Room ist.
 		return currentRoom;
-	}
+	}*/
 	
 	public Player getPlayer(){
 		return user;
@@ -158,9 +159,10 @@ public class GameEngine {
 		current = room;
 	}
 	
+	/*
 	public void setCurrentRoom(Room room) {
 		currentRoom = room;
-	}
+	}*/
 	
 	public void printWelcome() {
 		String name;
@@ -189,9 +191,10 @@ public class GameEngine {
         current = "center";		//startar spelet i centrum
     }
 	
+	/*
 	public Shop getShop(){
 		return shop;
-	}
+	}*/
 	
 	 public void changeRoom(String current)
 	 {
@@ -209,11 +212,12 @@ public class GameEngine {
 	 }
 	 
 	 
+	 /*
 	 public void changeCurrentRoom(Room current)	//rumsreferenser ist. för strängar. krävs dock många kodändringar om denna ska funka
 	 {
 		 setCurrentRoom(current);
-		 //setJPanelWithBackground(current.getPicture(engine.getCurrentRoom()));	//ex behöver getpicture ändras isåfall
-	 }
+		 setJPanelWithBackground(current.getPicture(engine.getCurrentRoom()));	//ex behöver getpicture ändras isåfall
+	 }*/
 	 
 	 public void stateSetup(String name){
 		 	user.setUserName(name);

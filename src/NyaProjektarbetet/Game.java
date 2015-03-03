@@ -1,7 +1,7 @@
 package NyaProjektarbetet;
 
 public class Game {
-	private UserInterface gui;
+	//private UserInterface gui;
 	private GameEngine engine;
 
     public Game() {

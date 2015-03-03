@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 
 public class Room implements Serializable{
 	//Tillfällig kod för att det ska kompilera
-	private PanelSklett jp;
-	private GameEngine e;
-	int i;
+	//private PanelSklett jp;
+	//private GameEngine e;
+	//public int i;
 	
 	public Room()
 	{
@@ -19,8 +19,8 @@ public class Room implements Serializable{
 	
 	public Room(PanelSklett jp, GameEngine e)
 	{
-		this.jp = jp;
-		this.e = e;
+		//this.jp = jp;
+		//this.e = e;
 		
 	}
 	
