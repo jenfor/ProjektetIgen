@@ -27,10 +27,15 @@ public class Inventory implements Serializable {
 	}
 	
 	private void createInventory(){
+		//******* Lägg in nya items så att de med HÖGST level läggs till FÖRST med items.put! 
+		//(Detta för tt de ska hamna i rätt ordning i shop)
+		
 		Item blueBrick = new Item(100, 1, "BrickBlue.png", "Blå tegelsten");
 		Item redBrick = new Item(200, 1, "BrickRed.png", "Röd tegelsten");
-		items.put(blueBrick, 0);
+		Item fishBrick = new Item(200, 2, "fish.png", "Fisksten");
+		items.put(fishBrick, 0);
 		items.put(redBrick, 0);
+		items.put(blueBrick, 0);
 		//JOptionPane.showMessageDialog(gui.myFrame(), items.get(blueBrick), "", JOptionPane.INFORMATION_MESSAGE);
 	}
 	

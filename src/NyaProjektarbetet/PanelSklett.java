@@ -1,7 +1,9 @@
 package NyaProjektarbetet;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 //import java.awt.Image;
@@ -24,6 +26,8 @@ import javax.swing.JPanel;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+
+
 
 
 //import java.awt.Image;
@@ -52,6 +56,7 @@ public class PanelSklett implements Observer{
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
 	private HashMap<String, Integer> rightPanel = new  HashMap<String, Integer>();
+	//public JButton moneyLabel;
 	
 	/*public Room center;
 	public Room shop;
@@ -188,20 +193,64 @@ public class PanelSklett implements Observer{
 	    
 	    panel.setLayout(new BorderLayout());
 	    downPanel.setLayout(new GridLayout(1,10));
-	    gridPanel.setLayout(new GridLayout(5,5,40,40));
+	    gridPanel.setLayout(new GridLayout(5,5,40,20));
 	    
 	    downPanel.setPreferredSize(new Dimension(100, 100)); 
 	    
 	    
 	    //**************************Skapa knappar**************************
 	    //Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
+//Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
 	    
 	    for(Item item : shopItems.keySet() ){ 
-	    	URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
-	    	ImageIcon icon = new ImageIcon(imageURL);
+	    	
+	    	ImageIcon icon;
+	    	
+	    	if (shopControl.levelControl(item)){
+	    		URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
+		    	icon = new ImageIcon(imageURL);
+	    	}
+	    	else{
+	    		URL imageURL = this.getClass().getClassLoader().getResource("cross_grey.png");
+		    	icon = new ImageIcon(imageURL);
+	    	}
+	    	
+	    	/*URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
+	    	ImageIcon icon = new ImageIcon(imageURL);*/
+	    	Font font = new Font("Verdana", Font.BOLD, 12);
 	    	JButton tempButton = new JButton (item.getItemName(), icon);
+	    	tempButton.setFont(font);
+	    	tempButton.setForeground(Color.white);
+	    	
+	    	JTextField itemText;
+	    	
+	    	if ( shopControl.levelControl(item)){
+	    		itemText = new JTextField("Pris: " + item.getItemPrice() + " kr\n Level: " + item.getItemLevel());
+	    	}
+	    	else{
+	    		itemText = new JTextField("Låses upp på level " + item.getItemLevel());
+	    	}
+	    	itemText.setHorizontalAlignment(JTextField.CENTER);
+	    	itemText.setEditable(false);
+	    	//itemText.setOpaque(true);	
+	    	itemText.setOpaque(false);	
+	    	itemText.setFont(font);
+	    	//itemText.setBackground(Color.BLACK);
+	    	itemText.setForeground(Color.white);
+	    	itemText.setBorder(null);
+	    	
+	    	
+	    	
+	    	
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
+	    	
+	    	JPanel itemGrid = new JPanel();
+	    	itemGrid.setOpaque(false);
+	    	itemGrid.setLayout(new GridLayout(2,1));
+	    	
+	    	itemGrid.add(tempButton);
+	    	itemGrid.add(itemText);
 
 	    	
 	    	tempButton.addActionListener(new ActionListener()  {
@@ -218,15 +267,20 @@ public class PanelSklett implements Observer{
 				}
 			});
 	    	
-	    	gridPanel.add(tempButton);	//lägger till knappen
+	    	//gridPanel.add(tempButton);	//lägger till knappen -------------------------------
+	    	//gridPanel.add(tempLabel);-------------------------------
+	    	
+	    	gridPanel.add(itemGrid);
 	    	itemButtons.add(tempButton); //sparar knappen i en arraylist för att man ska kunna leta igenom knapparna
 		}
+	    
 	    
 	  //**************************Skapa tomma knappar för resten av utrymmena**************************
 	    int buffer = 25 - shopItems.size();
 	    int j = 0;
 	    for(j = 1; j <= buffer; j++ ){ //lägger till tomma knappar för att fylla skärmen
-	    	JButton tempButton = new JButton ("Item nr " + j);
+	    	//JButton tempButton = new JButton ("Item nr " + j);
+	    	JButton tempButton = new JButton ();
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
 	    	gridPanel.add(tempButton);
@@ -234,6 +288,18 @@ public class PanelSklett implements Observer{
 		}
 	    
 	  //**************************Övriga menyknappar etc**************************
+	    Font menuFont = new Font("Verdana", Font.BOLD, 16);
+	    
+	    /*
+	    moneyLabel = new JButton ("Du har " + engine.getPlayer().getMoney() + " kr.");
+	    moneyLabel.setContentAreaFilled(false);
+	    moneyLabel.setFont(menuFont);
+	    moneyLabel.setForeground(Color.white);
+	    //centrumButton.setBounds(4,6,100,200);
+	    //centrumButton.setBorderPainted(false); //med eller utan kant
+	    downPanel.add(moneyLabel);*/
+	    
+	   
 	    JButton centrumButton = new JButton ("Tillbaka till centrum");
 	    centrumButton.addActionListener(new ActionListener() {
 			
@@ -246,6 +312,8 @@ public class PanelSklett implements Observer{
 			}
 		});
 	    centrumButton.setContentAreaFilled(false);
+	    centrumButton.setFont(menuFont);
+	    centrumButton.setForeground(Color.white);
 	    //centrumButton.setBounds(4,6,100,200);
 	    //centrumButton.setBorderPainted(false); //med eller utan kant
 	    downPanel.add(centrumButton);
@@ -261,6 +329,8 @@ public class PanelSklett implements Observer{
 				
 			}
 		});
+	    gardenButton.setFont(menuFont);
+	    gardenButton.setForeground(Color.white);
 	    gardenButton.setContentAreaFilled(false);
 	    //gardenButton.setBounds(4,6,100,200);
 	    //gardenButton.setBorderPainted(false); //med eller utan kant
@@ -276,6 +346,9 @@ public class PanelSklett implements Observer{
 			}
 		});
 	    inventoryButton.setContentAreaFilled(false);
+	    inventoryButton.setFont(menuFont);
+	    inventoryButton.setForeground(Color.white);
+	    
 	    //clickButton2.setBounds(300,400,200,200);
 	    //clickButton.setBorderPainted(false); //med eller utan kant
 	    downPanel.add(inventoryButton);
@@ -540,13 +613,15 @@ public class PanelSklett implements Observer{
 			    //Object amount = entry.getValue();
 				//ImageIcon iconapprove = new ImageIcon(entry.getKey().getItemPicture());
 				
-				URL imageURL = this.getClass().getClassLoader().getResource(entry.getKey().getItemPicture());
-				ImageIcon iconapprove = new ImageIcon(imageURL);
-				
-				JLabel imglabelapprove1 = new JLabel(entry.getValue().toString());
-			    imglabelapprove1.setIcon(iconapprove);
-			    imglabelapprove1.setHorizontalAlignment(JLabel.CENTER);
-			    invBG.add(imglabelapprove1);
+				if(entry.getKey().getItemLevel() <= engine.getPlayer().getLevel()){
+					URL imageURL = this.getClass().getClassLoader().getResource(entry.getKey().getItemPicture());
+					ImageIcon iconapprove = new ImageIcon(imageURL);
+					
+					JLabel imglabelapprove1 = new JLabel(entry.getValue().toString());
+				    imglabelapprove1.setIcon(iconapprove);
+				    imglabelapprove1.setHorizontalAlignment(JLabel.CENTER);
+				    invBG.add(imglabelapprove1);
+				}
 			}
 			
 			inventory.pack();

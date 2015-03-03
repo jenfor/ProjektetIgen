@@ -361,6 +361,13 @@ public class UserInterface {
 	            	invisPanels.createInventoryPanel();
 	            }
 	        });
+	        
+	        moneyButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent event) {
+	            	JOptionPane.showMessageDialog(null, "Du har " + engine.getPlayer().getMoney() + " kr.", "Pengar", JOptionPane.INFORMATION_MESSAGE);
+	            }
+	        });
 	 }
 	 
 	 public void setJPanelWithBackground(String i)

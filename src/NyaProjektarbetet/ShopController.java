@@ -15,11 +15,17 @@ public class ShopController {
     public void buyControl(String value, String clickedItem){
 	
     	if( isInteger(value) ){		//Om man skrivit in siffror, fortsätter med kontrollen
-    		JOptionPane.showMessageDialog(null, "Du vill köpa " + value + " stycken.", "KÖP", JOptionPane.OK_CANCEL_OPTION);
-    		moneyControl(value, clickedItem);
+    		int reply = JOptionPane.showConfirmDialog(null, "Vill du köpa " + value + " stycken?", "KÖP", JOptionPane.YES_NO_OPTION);
+            
+    		if (reply == JOptionPane.YES_OPTION) {
+              moneyControl(value, clickedItem);
+            }
+            else {
+            }
+    		
     	}
     	else if (value == null){ 	//Om insträngen är null
-    		JOptionPane.showMessageDialog(null, "Skriv in ett antal du vill köpa!", "KÖP", JOptionPane.OK_CANCEL_OPTION);
+    		//JOptionPane.showMessageDialog(null, "Skriv in ett antal du vill köpa!", "KÖP", JOptionPane.OK_CANCEL_OPTION);
     	}
     	else{ 	//Om man skrivit in något annat än siffror
     		JOptionPane.showMessageDialog(null, "Du måste skriva in siffror!", "KÖP", JOptionPane.OK_CANCEL_OPTION);
@@ -47,6 +53,15 @@ public class ShopController {
 	        return false; 
 	    }
 	    return true; 	    // man kommer bara hit om man inte redan returnerat false
+	}
+	
+	public boolean levelControl(Item item){
+		if(engine.getPlayer().getLevel() >= item.getItemLevel()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
     /* -----------Man kan även göra inre klasser som implementerar actionlistener. Vore detta mer korrekt?
