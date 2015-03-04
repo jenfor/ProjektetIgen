@@ -3,9 +3,6 @@ package NyaProjektarbetet;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 /**
  * This class is the basclass for the rooms.
@@ -41,53 +38,54 @@ public class Room implements Serializable{
 		}
 		
 	}
+	
+	/**
+	* add - in only used in garden. 
+	*
+	* @param  lopnr   the position of a specific place in the garden.
+	* @param  icon    a string that represents a picture of a brick.
+	* 
+	*/
+	public void addItem(int lopnr, String icon)
+	{
 		
-		/**
-		* add - in only used in garden. 
-		*
-		* @param  lopnr   the position of a specific place in the garden.
-		* @param  icon    a string that represents a picture of a brick.
-		* 
-		*/
-		public void addItem(int lopnr, String icon)
-		{
-			
-		}
+	}
+	
 		
-			
-		/**
-		* removeItem - in only used in garden.
-		*
-		* @param  lopnr   the position of a specific place in the garden.
-		*
-		*/
-		public void removeItem(int lopnr)
-		{
-			
-		}
+	/**
+	* removeItem - in only used in garden.
+	*
+	* @param  lopnr   the position of a specific place in the garden.
+	*
+	*/
+	public void removeItem(int lopnr)
+	{
 		
-		/**
-		* getGardenIcon - is only used in garden garden.
-		*
-		* @param  	lopnr   the position of a specific place in the garden.
-		* @return			a string that represents the picture saved at this position.                
-		*/
-		public String getGardenIcon(int lopnr)
-		{
-			return null;
-		}
-		
-		
-		
-		/**
-		* getGardenItems - is used in garden.
-		*
-		* @return  	a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
-		*       
-		*/	
-		public HashMap<Integer, String> getGardenItems(){
-			return null;
-		}
+	}
+	
+	/**
+	* getGardenIcon - is only used in garden garden.
+	*
+	* @param  	lopnr   the position of a specific place in the garden.
+	* @return			a string that represents the picture saved at this position.                
+	*/
+	public String getGardenIcon(int lopnr)
+	{
+		return null;
+	}
+	
+	
+	
+	/**
+	* getGardenItems - is used in garden.
+	*
+	* @return  	a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
+	*       
+	*/	
+	public HashMap<Integer, String> getGardenItems()
+	{
+		return null;
+	}
 	    
 
 }
