@@ -161,7 +161,25 @@ public class PanelSklett implements Observer{
 			}
 		});
 	    
-	   	    
+	    
+	    JButton clickButton3 = new JButton ("Minispel");
+	    clickButton3.setBounds(800,400,200,200);
+	    clickButton3.setContentAreaFilled(false);
+	    //clickButton.setBorderPainted(false); //med eller utan kant
+	    panel.add(clickButton3);
+	    
+	    clickButton3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				//ui.changeRoom("garden");					//strängar ist. för rumsreferenser
+				//engine.changeCurrentRoom(engine.garden);	//rumsreferenser ist. för strängar
+				//engine.changeRoom("garden");				//flyttat till engine
+				new MiniGame();
+			}
+		});
+	    
 	    return panel;
     
     
