@@ -13,11 +13,18 @@ public class MiniGameActions {
     private int wrongAnsweres;
     private int score;
     
+    /**
+     * Class-constructor
+     * 
+     * @param minigame
+     */
 	public MiniGameActions(MiniGame miniGame){
 		this.miniGame = miniGame;
 	}
 
-    
+    /**
+     * Creates a mathproblem and a solution to the problem.
+     */
 	public void createMathProblemSolution(){
     	Random rand = new Random();
     	product1 = rand.nextInt(11); 
@@ -27,20 +34,38 @@ public class MiniGameActions {
     	miniGame.getMathProblemTextArea().setText(getMathProblemString());
     }
     
+    /**
+     * Turns the products of the problem into a string and returns it.
+     * 
+     * @return mathProbText    a string containing the mathproblem to solve
+     */
     public String getMathProblemString(){
     	String mathProbText = ("\n      " + product1 + "x"+ product2);
     	return mathProbText;
     }
     
+    /**
+     * Turns the mathsolution of the problem into a string and returns it.
+     * 
+     * @return solution    a string containing the solution to the mathproblem
+     */
     public String getMathSolutionString(){
     	String solution = ("" + mathSolution);
     	return solution;
     }
     
+    /**
+     * Returns how many times the player got the answere wrong.
+     * 
+     * @return wrongAnsweres    an int
+     */
     public int getWrongAnswers(){
     	return wrongAnsweres;
     }
     
+    /**
+     * Turns the products of the problem into a string and returns it.
+     */
     public void setWrongAnswers(){
     	if(wrongAnsweres > 3){
     		wrongAnsweres = 0;

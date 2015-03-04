@@ -20,15 +20,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-    /**
-     *
-     * @param label
-     * @param miniGame
-     */
+
 public class Mole extends JButton implements ActionListener {
 	MoleActions actions;
     private Timer timer;                        // för start/stop actions
-    private int animationDuration = 3500; 		// varje animation tar 3,5 s
+    private int animationDuration = 2500; 		// varje animation tar 3 s
     private long animStartTime;    				// starta tiden för varje animation
     private int translateY = 0;                 // knappens y position
     private static final int MAX_Y = 100;
@@ -37,14 +33,18 @@ public class Mole extends JButton implements ActionListener {
     private String moleAns;
     private ImageIcon molePic;
     private ImageIcon wrongAnsPic;
-
-
-    // Skapar en ny instans av Mole
+    
+    /**
+    * Class-construktor
+    * Creates a molebutton and starts a animation-timer.
+    * 
+    * @param label
+    * @param miniGame
+    */
     public Mole(String label, MiniGame miniGame) {
     	super(label); // lägger till strängen som innehåller en siffra på knappen
         this.miniGame = miniGame;
         actions = new MoleActions(miniGame);
-        
         moleAns = label;    	
     	
         setFont(new Font("Serif", Font.BOLD, 40)); // ändrar textens storlek och färg
@@ -67,11 +67,10 @@ public class Mole extends JButton implements ActionListener {
     }
     
     /**
-     * Visar komponenten på position (0, translateY). Note that
-     * this changes only the rendering location of the button, not the
-     * physical location of it. Note, also, that rendering into g will
-     * be clipped to the physical location of the button, so the button will
-     * disappear as it moves away from that location.
+     * Visar komponenten på position (0, translateY). Detta ändrar endast
+     * den renderade positionen, icke den fysiska.
+     * 
+     * @param g
      */
     public void paint(Graphics g) {
         g.translate(0, translateY);
@@ -79,8 +78,11 @@ public class Mole extends JButton implements ActionListener {
     }
     
     /**
-     * actionPerformed hanterar ena knapptrycket som stannar animationen, och poäng vid rätt/fel svar
-     * samt om man förlorar spelet, beroende på inparametern.
+     * actionPerformed handles the pressed button that stops the animation, 
+     * points when the button containing the answer is right or wrong and 
+     * when the player loose.
+     * 
+     * @param e
      */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this)) {
@@ -128,16 +130,5 @@ public class Mole extends JButton implements ActionListener {
             repaint();
         }
     }
-/*
-	private void updateScore(JTextArea a) {
-		miniGame.setScore(10);
-		a.setText("\n " + rightAns + miniGame.getScore());
-	}
-	
-	private void wrongAnswere(JTextArea a) {
-		miniGame.setScore(-2);
-		miniGame.setWrongAnswers();
-    	System.out.println(" Fel: " + miniGame.getWrongAnswers());
-		a.setText("\n " + rightAns + miniGame.getScore());
-	}*/
+
 }

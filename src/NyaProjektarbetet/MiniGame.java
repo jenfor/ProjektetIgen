@@ -162,7 +162,9 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     	window.pack();
     }
 
-    // ändrar muspekaren till en hammare
+    /**
+     * Ändrar muspekaren till en hammare
+     */
 	public void setTheCursor(){
 		Toolkit toolkit = Toolkit.getDefaultToolkit();  
 		if(cursorClick == true){
@@ -207,20 +209,19 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	}
 
     //senare ver, tar in int som anger multitabell
+	/**
+	 * Skapar fältet av mullvadar
+	 */
 	public void createMole(){
     	int a = 1;
     	int b = 0;
     	
     	String label = "";
 
-    	// ska användas så att mullvaden med rätt svar placeras på slumpad ställe
     	Random rand = new Random();
     	int j = rand.nextInt(9) + 3;
-    	System.out.println(" J: " + j);
-    	
     	
     	pan2.removeAll();
-    	
     	
     	pan2.add(pointsSoFarText);
     	pointsSoFarText.setEditable(false);
@@ -231,16 +232,12 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     	pan2.add(closeB);
     	
     	for( int i=0; i<12; i++ ){
-    		// slumpade tal till mullvadar
-    		b = rand.nextInt(101);
+    		b = rand.nextInt(101); // slumpade tal till mullvadar
     		label = "" + b;
     		
-    		// tre första knapparna är osynliga
-    		// skapar problem samt svar som läggs på en mullvad vid slumpat varv
-    		// andra mullvadar får slumpat tal mellan 0 och 100
     		if( i < 3 ){
     			emptyButton = new JButton();
-    			emptyButton.setBounds(100,a,100, 100);
+    			//emptyButton.setBounds(100,a,100, 100);
     			emptyButton.setOpaque(false);
     			emptyButton.setContentAreaFilled(false);
     			emptyButton.setBorderPainted(false);
@@ -249,15 +246,12 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     		else if( i == j ){
     			miniGameActions.createMathProblemSolution();
     			Mole moleIm = new Mole(miniGameActions.getMathSolutionString(),this);
-   
-	    		moleIm.setBounds(100,a,100, 100);
 	        	pan2.add(moleIm);
 	        	moleIm.addMouseListener(this);
 
     		}
     		else{
     			Mole moleIm = new Mole(label, this);
-    			moleIm.setBounds(100,a,100, 100);
         		pan2.add(moleIm);
         		moleIm.addMouseListener(this);
     		}

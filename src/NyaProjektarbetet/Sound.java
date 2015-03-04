@@ -6,10 +6,17 @@ import javax.sound.sampled.Clip;
 
 
 public class Sound {
+    /**
+     * Class-constructor
+     */
 	public Sound(){
 		
 	}
-
+    /**
+     * Plays sounds/music. 
+     * 
+     * @param url    the source-name of the sound
+     */
 	public static synchronized void playSomeSound(final String url) {
 		  new Thread(new Runnable() {
 		//vill man ha loop: byt ut clip mot loop, fungerar nog bara med wav

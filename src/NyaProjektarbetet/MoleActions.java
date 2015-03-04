@@ -2,10 +2,15 @@ package NyaProjektarbetet;
 
 import javax.swing.JTextArea;
 
+
 public class MoleActions {
 	private MiniGame miniGame;
     private static final String rightAns = "Antal poäng: ";
-
+    /**
+    * Class-construktor
+    * 
+    * @param    
+    */
 	public MoleActions(MiniGame miniGame){
 		this.miniGame = miniGame;
 		
