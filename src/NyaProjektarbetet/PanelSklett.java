@@ -79,7 +79,7 @@ public class PanelSklett implements Observer{
 
 		gardenController = new GardenController(e.userInventory, engine);
 		gardenController.addObserver(this);
-		engine.userInventory.addObserver(this);
+		//engine.userInventory.addObserver(this);
 		
 		//engine.getPlayer().myInventory
 	}
@@ -356,6 +356,9 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createGardenPanel()
 	{
+		
+		engine.userInventory.addObserver(this);
+		
 		JPanel panel = new JPanel(); 
 		panel.setOpaque(false);
 	    panel.setLayout(null);
@@ -371,6 +374,10 @@ public class PanelSklett implements Observer{
 	    gardenController.setInventory(engine.userInventory);
 	    
         Set<Entry<Item, Integer>> pairs = inventory.entrySet();
+        
+        for(Item item : inventory.keySet()){
+			engine.userInventory.updateInventory(item, 0);
+        }
         
 	    
 	    // Det osynlliga rutnätet med knappar
@@ -528,6 +535,17 @@ public class PanelSklett implements Observer{
 			    itemsLeft2.setContentAreaFilled(false);//Osynlighet
 			    itemsLeft2.setBorderPainted(false);//Osynlighet
 			    showInventory.add(itemsLeft2);
+			    
+			    
+			    // Visa antal  tillgänliga Items
+			    /*int x = entry.getValue();
+			    itemsLeft = new JButton();
+			    itemsLeft.setText("" + x);
+			    itemsLeft.setBounds(column-15, rad+30,60,30);
+			    itemsLeft.setContentAreaFilled(false);//Osynlighet
+			    itemsLeft.setBorderPainted(false);//Osynlighet*/
+			    //panelButtons.put(buttonNr, itemsLeft);
+			    //showInventory.add(itemsLeft);
 			    
 			    
 			    
