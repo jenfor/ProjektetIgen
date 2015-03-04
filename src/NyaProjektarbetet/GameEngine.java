@@ -97,7 +97,8 @@ public class GameEngine {
     			
     		catch(Exception e){
     			e.printStackTrace();
-    			System.out.println("\nHoppsan, något gick fel vid sparandet!");
+    			//System.out.println("\nHoppsan, något gick fel vid sparandet!");
+    			JOptionPane.showMessageDialog( null, "Hoppsan, något gick fel vid sparandet!","Spara",JOptionPane.OK_CANCEL_OPTION);
     		}
 
     	}
@@ -124,10 +125,10 @@ public class GameEngine {
     				user = gameState.getSavedPlayer();
     				garden = gameState.getSavedGarden();
     				userInventory = gameState.getSavedInventory();
-    				JOptionPane.showMessageDialog( null, "Din sparfil har laddats in!","yay!",JOptionPane.OK_CANCEL_OPTION);
+    				JOptionPane.showMessageDialog( null, "Din sparfil har laddats in!","Ladda",JOptionPane.OK_CANCEL_OPTION);
     			}
     			else{
-    				JOptionPane.showMessageDialog( null, "Du är en ny spelare!","Ny spelare",JOptionPane.OK_CANCEL_OPTION);
+    				
     			}
     			
     			//System.out.println("Laddar: saves/" + gameState.player.getUserName() + ".sav");
@@ -135,8 +136,8 @@ public class GameEngine {
     		}
     		
     		catch(Exception e){
-    			e.printStackTrace();
-    			System.out.println("\nNämen, något gick fel vid laddandet!");
+    			//e.printStackTrace();
+    			JOptionPane.showMessageDialog( null, "Du är en ny spelare!","Ny spelare",JOptionPane.OK_CANCEL_OPTION);
     		}
 
     	}

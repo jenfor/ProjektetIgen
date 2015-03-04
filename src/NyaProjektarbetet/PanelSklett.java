@@ -558,7 +558,7 @@ public class PanelSklett implements Observer{
 		if ( obj instanceof Inventory && arg instanceof Item ){
 			temp = (Item)arg;
 			if(panelButtons2.get(arg) != null)
-				panelButtons2.get(arg).setLabel("" + engine.userInventory.getInventory().get(temp));
+				panelButtons2.get(arg).setText("" + engine.userInventory.getInventory().get(temp));
 		}
 			
 	}
