@@ -97,7 +97,8 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createCenterPanel()
 	{
-		
+		Sound.stopSound();
+		//Sound.soundInLoop("");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenSize.setSize( screenSize.getWidth() , (screenSize.getHeight() - 30) ); //-30 kompenserar för windows-menybaren
         double width = screenSize.getWidth();
@@ -515,7 +516,7 @@ public class PanelSklett implements Observer{
 			
 			JPanelWithBackground invBG = new JPanelWithBackground("pictures/inventoryBG.jpg");
 			inventory.add(invBG);
-			invBG.setLayout(new GridLayout(4,1,1,1));
+			invBG.setLayout(new GridLayout(4,1));
 			
 			JPanel panel = new JPanel();
 		    panel.setOpaque(false);

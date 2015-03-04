@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class MiniGame extends Room implements ActionListener,MouseListener{
+	
+	private static final long serialVersionUID = 1L;
 	public JFrame window;
 	public JPanelWithBackground pan, pan2;
     public JButton startB;
@@ -49,6 +51,8 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 
     public MiniGame(Player player)
     {
+    	Sound.stopSound();
+		//Sound.soundInLoop("");
     	this.player = player;
     	miniGameActions = new MiniGameActions(this);
     	//this.miniGamePanel = miniGamePanel;
@@ -124,6 +128,7 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	    	startMoleGame();
 		}
 		else if (e.getSource() == closeB){
+			Sound.stopSound();
 			if( miniGameActions.getScore() > 0 ){
 				player.changeMoney(miniGameActions.getScore());
 			}
