@@ -6,6 +6,10 @@ import javax.swing.JOptionPane;
 
 
 public class Shop extends Room{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private HashMap<Item, Boolean> shopItems; //Boolean = får spelaren köpa föremålet?
 	private Player player;
 	String shopPicture;
@@ -42,7 +46,6 @@ public class Shop extends Room{
 		JOptionPane.showMessageDialog(null, "Det blir " + price + " kronor.", "", JOptionPane.OK_CANCEL_OPTION);
 		
 		if(player.getMoney() >= price){
-    		//JOptionPane.showMessageDialog(null, "Du har råd!", "", JOptionPane.OK_CANCEL_OPTION);
     		buy(boughtItem, numberOfItems);
     	}
     	else{
@@ -53,9 +56,7 @@ public class Shop extends Room{
 	public void buy(Item boughtItem, int numberOfItems){ 
 		
 		if ( shopItems.get(boughtItem) ){ 	//dvs om föremålet man klickat på är true = får köpas
-			//JOptionPane.showMessageDialog(null, "Dina pengar innan köp: " + player.getMoney(), "Pengar", JOptionPane.INFORMATION_MESSAGE);
 			player.changeMoney((-1) * numberOfItems * boughtItem.getItemPrice()); 	//drar bort pengar från spelarens plånbok
-			//JOptionPane.showMessageDialog(null, "Dina pengar efter köp: " + player.getMoney(), "Pengar", JOptionPane.INFORMATION_MESSAGE);
 			player.myInventory.updateInventory(boughtItem, numberOfItems); 	//lägger till rätt antal föremål i ryggsäcken
 		}
 		else{

@@ -5,23 +5,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 
@@ -37,11 +29,6 @@ public class UserInterface implements Observer{
 	private JPanelWithBackground panel;
 	public PanelSklett invisPanels;
 	private JPanelWithBackground background;
-	//private JTextField entryField;
-	//private JTextArea log;
-	//private HashMap<String,JButton> exitButtons = new HashMap<String,JButton>();
-	//private UserInterface that = this; // ;-)
-	//private Room room;
 	
     public UserInterface(GameEngine gameEngine)
     {
@@ -67,13 +54,6 @@ public class UserInterface implements Observer{
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
         
-		//Frame har en bestämd storlek 1280x800. Kan finnas kvar tills man implementerar resize-funktion för JButton
-        /*myFrame.setPreferredSize(new Dimension(1280, 750));	
-        myFrame.setMinimumSize(new Dimension(1280, 750));
-        myFrame.setResizable(false);
-        myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
-        
-        //Ska vi ha såhär så att det skalar istället? Eller blev det något problem med JButton då? (enligt kommentaren här ovanför...)
         myFrame.setPreferredSize(screenSize);	
         myFrame.setMinimumSize(screenSize);
         myFrame.setResizable(false);
@@ -111,10 +91,9 @@ public class UserInterface implements Observer{
 	public void createMenu() {
     	//GUI'n skapas
         JMenuBar menuBar;
-        JMenu menu, submenu;
+        JMenu menu;
         JMenuItem menuItem;
-        JRadioButtonMenuItem rbMenuItem;
-        JCheckBoxMenuItem cbMenuItem;
+
 
         //Menyn skapas
         menuBar = new JMenuBar();
@@ -141,12 +120,6 @@ public class UserInterface implements Observer{
         //Öppna en sparad fil
 		menuItem = new JMenuItem("Öppna", new ImageIcon("pictures/small_arrow.gif"));
         menuItem.setMnemonic(KeyEvent.VK_T);
-        /*menuItem = new JMenuItem("Öppna",
-                KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription(
-                "Öppnar ditt spel (förhoppningsvis)");*/
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -176,8 +149,12 @@ public class UserInterface implements Observer{
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	int svar = JOptionPane.showConfirmDialog(null, "Vill du lämna spelet nu?", "Avsluta", JOptionPane. YES_NO_OPTION);
-            	if(svar == JOptionPane.YES_OPTION)
+            	int svar = JOptionPane.showConfirmDialog(null, "Vill du spara innan du avslutar?", "Avsluta", JOptionPane. YES_NO_OPTION);
+            	if(svar == JOptionPane.YES_OPTION){
+            		engine.save();
+            		System.exit(0);
+            	}
+            	else
             		System.exit(0);
             }
         });
@@ -187,6 +164,10 @@ public class UserInterface implements Observer{
 
         //Fler menydelar vi kanske kan vilja använda till något
         /*
+        JMenu submenu;
+        JRadioButtonMenuItem rbMenuItem;
+        JCheckBoxMenuItem cbMenuItem;
+        
         menu.addSeparator();
         ButtonGroup group = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
@@ -278,7 +259,16 @@ public class UserInterface implements Observer{
         myFrame.setJMenuBar(menuBar);
         
         myFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {System.exit(0);}
+            public void windowClosing(WindowEvent e) {
+            	int svar = JOptionPane.showConfirmDialog(null, "Vill du spara innan du avslutar?", "Avsluta", JOptionPane. YES_NO_OPTION);
+            	if(svar == JOptionPane.YES_OPTION){
+            		engine.save();
+            		System.exit(0);
+            	}
+            	else
+            		System.exit(0);
+            	
+            }
         });
 		
         myFrame.pack();
@@ -289,27 +279,8 @@ public class UserInterface implements Observer{
 		
 	        image ="pictures/startbackground.jpg";
 	        
-	        //entryField = new JTextField(34);
-	        /*
-	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	        double width = screenSize.getWidth();
-	        double height = screenSize.getHeight();
-	        
-	        double textHeight = height * 0.15;
-	        double textWidth = height * 0.15;
-	        double imgWidth = width * 0.9;
-	        double imgHeight = height * 0.9;
-	        
-	        myFrame.setPreferredSize(new Dimension((int)width, (int)height));
-	        myFrame.setMinimumSize(new Dimension((int)width, (int)height));
-	        myFrame.setResizable(false);
-	        myFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	        
-	        entryField.requestFocus();
-	         */	
 	        panel = new JPanelWithBackground(image); 
 	        addBorderLayout(panel, engine.getCurrent());
-	        //createMenu();
 	       	               	        
 	        myFrame.pack();
 	              
@@ -321,49 +292,33 @@ public class UserInterface implements Observer{
 	 {
 		 	engine.getPlayer().addObserver(this);
 		 	
-		 	//int i = 0;
 		 	String nextRoom = "Centrum";
 		 	if("center".equals(current)){ nextRoom = "Affär";}
-		 	//final int j = i;
 		 	final String c = current;
 		 			 	
 		 	exitButton = new JButton("Avsluta");
 	        JButton button2 = new JButton(nextRoom);
 	        JButton infoButton = new JButton("Info");
 	        JButton itemButton = new JButton("Föremål");
-	        //JButton moneyButton = new JButton("Pengar");
 	        moneyButton = new JLabel("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
 	        
-	        //String image ="pictures/startbackground.jpg";
 	                
 	        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	        double width = screenSize.getWidth();
 	        double height = screenSize.getHeight();
 	        
-	        /*------Dessa kan bli användbara för skalning, ta ej bort!
-	        double textHeight = height * 0.15;
-	        double textWidth = height * 0.15;
-	        double imgWidth = width * 0.9;
-	        double imgHeight = height * 0.9;
-	        */
 	        
 	        JPanel p = new JPanel(new GridLayout(4,1));
 	        JPanel p2 = new JPanel(new GridLayout(4,1));
 	        JPanel b = new JPanel();
 	        b.setLayout(new BoxLayout(b, BoxLayout.X_AXIS));
-	        //b.setBackground(Color.black);
 
-	        //p.add(button2);
-	        //p.add(mapButton);
-	        //p.add(exitButton);
 	        b.add(moneyButton);
 	        b.add(itemButton);
 	        b.add(button2);
 	        b.add(infoButton);
-	        //b.add(exitButton);
 	        
 	        panel.setLayout(new BorderLayout());
-	        //panel.add(textBox, BorderLayout.AFTER_LAST_LINE);
 	        panel.add(p, BorderLayout.WEST);
 	        panel.add(p2, BorderLayout.EAST);
 	        panel.add(b, BorderLayout.NORTH);
@@ -378,13 +333,10 @@ public class UserInterface implements Observer{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					if("center".equals(c)){
-					//that.changeRoom("shop");
-					//engine.changeCurrentRoom(engine.shop);		//rumsreferenser ist. för strängar
-					engine.changeRoom("shop");				//flyttat till engine
+						engine.changeRoom("shop");				//flyttat till engine
 					}
-					//else that.changeRoom("center");
-					//else engine.changeCurrentRoom(engine.center);		//rumsreferenser ist. för strängar
-					else engine.changeRoom("center");				//flyttat till engine
+					else 
+						engine.changeRoom("center");				//flyttat till engine
 				}
 			});
 	       	
@@ -418,13 +370,6 @@ public class UserInterface implements Observer{
 	            }
 	        });
 	        
-	        /*
-	        moneyButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent event) {
-	            	JOptionPane.showMessageDialog(null, "Du har " + engine.getPlayer().getMoney() + " kr.", "Pengar", JOptionPane.INFORMATION_MESSAGE);
-	            }
-	        });*/
 	 }
 	 
 	 public void setJPanelWithBackground(String i)
@@ -436,13 +381,9 @@ public class UserInterface implements Observer{
 		  panel.add(invisPanels.getPanel(engine.getCurrent()), BorderLayout.CENTER); //room.getRoomPanel("Shop"/*engine.getCurrent()*/));
 		  myFrame.add(panel);			
 		  myFrame.pack();
-		  //myFrame.setVisible(true);   
 	 }
 	 
-	 public void updateMoneyButton(){	//inte användbar just nu
-		 moneyButton.setText("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
-	 }
-	 
+
 	 public void update(Observable obj, Object arg)
 		{
 			if(obj instanceof Player && arg instanceof Integer){
@@ -453,30 +394,6 @@ public class UserInterface implements Observer{
 			
 				
 		}
-	 
-	 /*
-	 public void changeRoom(String current)
-	 {
-		 //Eftersom rumsbyte är mer logik än grafik, har jag flyttat rummen till gameengine. så den här koden behövs inte egentligen
-		  * 
-		  * 
-		  * 
-		 //engine.setCurrent(current);
-		 //if(current.equals("Center")) room = invisPanels.center; 
-		 //else if(current.equals("Shop")) room = invisPanels.shop;
-		 //else if(current.equals("Garden")) room = invisPanels.garden;
-		 //else room = invisPanels.miniGame1;
-		 
-		 //setJPanelWithBackground(room.getPicture(engine.getCurrent()));
-		 
-		 engine.setCurrent(current);
-		 if(current.equals("Center")) room = engine.center; 
-		 else if(current.equals("Shop")) room = engine.shop;
-		 else if(current.equals("Garden")) room = engine.garden;
-		 else room = engine.minigame1;
-		 
-		 setJPanelWithBackground(room.getPicture(engine.getCurrent()));
-	 }*/
 	 
 
 }

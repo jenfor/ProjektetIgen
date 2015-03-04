@@ -14,21 +14,19 @@ import javax.swing.*;
 public class GameEngine {
 	private Player user;
 	private UserInterface gui;
-	//Current room:
+	//***Current room:
 	private String current;
-	//private Room currentRoom;
-	//Rum:
+	//***Rum:
 	public Shop shop;
 	public Room center, garden, minigame1;
 	
-	public GardenController gardenController;
-	
+	//public GardenController gardenController;		//tror inte denna behövs här?
 	public Inventory userInventory;
 	
 	
 	
 	public static class State implements Serializable{
-		//Player, Garden, Inventory ska vara Serializable för att kunna skrivas till fil
+		//Player, Garden, Inventory måste vara Serializable för att kunna skrivas till fil
 		Player player = new Player();
 		Room gard = new Garden();
 		Inventory inven = new Inventory();
@@ -77,10 +75,6 @@ public class GameEngine {
 	    	gameState.setStateGarden(garden);
 	    	gameState.setStateInventory(userInventory);
     		try{
-    			//FileOutputStream saveFile = new FileOutputStream( "Libraries/Documents/sparat.sav" );
-    			//ObjectOutputStream save = new ObjectOutputStream( saveFile );
-    			//FileOutputStream saveFile = new FileOutputStream( "Libraries/Documents/" + gameState.player.getUserName() + ".sav" );
-    			
     			FileOutputStream saveFile = new FileOutputStream( "saves/" + gameState.player.getUserName() + ".sav" );
     			ObjectOutputStream save = new ObjectOutputStream( saveFile );
 
@@ -90,14 +84,10 @@ public class GameEngine {
     			
     			saveFile.close();
     			save.close();
-    			
-    			//System.out.println("Sparar som: saves/" + gameState.player.getUserName() + ".sav");
-    			//System.out.println("Den garden som sparas är:" + gameState.gard.getGardenItems()) ;
     		}
     			
     		catch(Exception e){
     			e.printStackTrace();
-    			//System.out.println("\nHoppsan, något gick fel vid sparandet!");
     			JOptionPane.showMessageDialog( null, "Hoppsan, något gick fel vid sparandet!","Spara",JOptionPane.OK_CANCEL_OPTION);
     		}
 
@@ -106,11 +96,6 @@ public class GameEngine {
 	    	
     	public void load(){
     		try{
-    			
-    			//FileInputStream saveFile = new FileInputStream( "Libraries/Documents/sparat.sav" );
-    			//ObjectInputStream load = new ObjectInputStream( saveFile );
-    			//FileInputStream saveFile = new FileInputStream( "Libraries/Documents/" + gameState.player.getUserName() + ".sav" );
-    			
     			FileInputStream saveFile = new FileInputStream( "saves/" + gameState.player.getUserName() + ".sav" );
     			ObjectInputStream load = new ObjectInputStream( saveFile );
 
@@ -131,12 +116,9 @@ public class GameEngine {
     				
     			}
     			
-    			//System.out.println("Laddar: saves/" + gameState.player.getUserName() + ".sav");
-    			//System.out.println("Den garden som laddas är:" + gameState.gard.getGardenItems()) ;
     		}
     		
     		catch(Exception e){
-    			//e.printStackTrace();
     			JOptionPane.showMessageDialog( null, "Du är en ny spelare!","Ny spelare",JOptionPane.OK_CANCEL_OPTION);
     		}
 
@@ -146,24 +128,16 @@ public class GameEngine {
 		return current;
 	}
 	
-	/*
-	public Room getCurrentRoom() {	//som getCurrent fast med Room ist.
-		return currentRoom;
-	}*/
 	
 	public Player getPlayer(){
 		return user;
 	}
 	
-	//Jag la till denna /Jenny
+
 	public void setCurrent(String room) {
 		current = room;
 	}
 	
-	/*
-	public void setCurrentRoom(Room room) {
-		currentRoom = room;
-	}*/
 	
 	public void printWelcome() {
 		String name;
@@ -177,25 +151,15 @@ public class GameEngine {
 	}
 	
 	private void createRooms() {
-        //Room center, garden, minigame1;
-        //Room shop;
       
         center = new Room();
-        /*if( !(gameState.getSavedPlayer().equals(user)) )*/ 
         garden = gameState.getSavedGarden();
-        //else garden = new Garden();
         minigame1 = new Room();
-        //shop = new Room();
-        //Shop shop = new Shop(user.myInventory.getInventory(), user); 	//shop som lokal variabel
-        shop = new Shop(userInventory.getInventory(), user);			//shop som instansvariabel, förmodligen att föredra
-
+        shop = new Shop(userInventory.getInventory(), user);
+        
         current = "center";		//startar spelet i centrum
     }
 	
-	/*
-	public Shop getShop(){
-		return shop;
-	}*/
 	
 	 public void changeRoom(String current)
 	 {
@@ -207,37 +171,16 @@ public class GameEngine {
 		 else if(current.equals("garden")) room = garden;
 		 else room = minigame1;
 		 System.out.println(current);
-		 //gui.setJPanelWithBackground(room.getPicture(getCurrent()));
 		 gui.setJPanelWithBackground(room.getPicture(current));
-		 //gui.setJPanelWithBackground("pictures/sno.jpg");
 	 }
 	 
-	 
-	 /*
-	 public void changeCurrentRoom(Room current)	//rumsreferenser ist. för strängar. krävs dock många kodändringar om denna ska funka
-	 {
-		 setCurrentRoom(current);
-		 setJPanelWithBackground(current.getPicture(engine.getCurrentRoom()));	//ex behöver getpicture ändras isåfall
-	 }*/
 	 
 	 public void stateSetup(String name){
 		 	user.setUserName(name);
 			gameState.setStatePlayer(user);
 			
-			
 			System.out.println("" + gameState.getSavedPlayer().getUserName());
 			load();	
-			
-			/*Player newPlayer = new Player();
-			newPlayer.setUserName(name);*/
-			/*
-			if( !(gameState.getSavedPlayer().equals(user)) ){
-				user = gameState.getSavedPlayer();
-				JOptionPane.showMessageDialog( null, "Din sparfil har laddats in!","yay!",JOptionPane.OK_CANCEL_OPTION);
-			}
-			else{
-				JOptionPane.showMessageDialog( null, "Du är en ny spelare!","Ny spelare",JOptionPane.OK_CANCEL_OPTION);
-			}*/
 			
 			createRooms();
 	 }
