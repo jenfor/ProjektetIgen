@@ -135,8 +135,8 @@ public class GameEngine {
     		}
     		
     		catch(Exception e){
-    			//e.printStackTrace();
-    			JOptionPane.showMessageDialog( null, "Du är en ny spelare!","Ny spelare",JOptionPane.OK_CANCEL_OPTION);
+    			e.printStackTrace();
+    			System.out.println("\nNämen, något gick fel vid laddandet!");
     		}
 
     	}

@@ -329,7 +329,7 @@ public class UserInterface implements Observer{
 		 			 	
 		 	exitButton = new JButton("Avsluta");
 	        JButton button2 = new JButton(nextRoom);
-	        JButton infoButton = new JButton("Info");
+	        JButton mapButton = new JButton("Position");
 	        JButton itemButton = new JButton("Föremål");
 	        //JButton moneyButton = new JButton("Pengar");
 	        moneyButton = new JLabel("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
@@ -359,7 +359,7 @@ public class UserInterface implements Observer{
 	        b.add(moneyButton);
 	        b.add(itemButton);
 	        b.add(button2);
-	        b.add(infoButton);
+	        b.add(mapButton);
 	        //b.add(exitButton);
 	        
 	        panel.setLayout(new BorderLayout());
@@ -395,19 +395,15 @@ public class UserInterface implements Observer{
 	            }
 	        });
 	        
-	        infoButton.addActionListener(new ActionListener() {
+	        mapButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
-	            	
-	            	String name = "Ditt spelarnamn är: " + engine.getPlayer().getUserName() + "\n";
-	            	String level = "Du är level: " + engine.getPlayer().getLevel() + "\n";
-	            	
 	            	if(engine.getCurrent().equals("center") )
-	            		JOptionPane.showMessageDialog(null, name + level + "Du är i centrum.", "Info", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är i centrum.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            	else if(engine.getCurrent().equals("shop") )
-	            		JOptionPane.showMessageDialog(null, name + level + "Du är i affären.", "Info", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är i affären.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            	else if(engine.getCurrent().equals("garden") )
-	            		JOptionPane.showMessageDialog(null, name + level + "Du är på din tomt.", "Info", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är på din tomt.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            }
 	        });
 	        
