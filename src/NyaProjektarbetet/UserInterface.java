@@ -58,8 +58,8 @@ public class UserInterface implements Observer{
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenSize.setSize( screenSize.getWidth() , (screenSize.getHeight() - 30) ); //-30 kompenserar för windows-menybaren
-        //double width = screenSize.getWidth();
-        //double height = screenSize.getHeight();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
         
 		//Frame har en bestämd storlek 1280x800. Kan finnas kvar tills man implementerar resize-funktion för JButton
         /*myFrame.setPreferredSize(new Dimension(1280, 750));	
@@ -76,7 +76,7 @@ public class UserInterface implements Observer{
         createMenu();
 		
 		JButton startButton = new JButton ("Starta spel");
-        startButton.setBounds(420,580,400,80);
+        startButton.setBounds((int)(width*0.34), (int)(height*0.72), 400, 80);
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false); 		//med eller utan kant
         startButton.setFont(font);

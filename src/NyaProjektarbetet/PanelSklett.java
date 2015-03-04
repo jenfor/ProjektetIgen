@@ -23,9 +23,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+
 
 
 
@@ -620,9 +622,11 @@ public class PanelSklett implements Observer{
 			//HashMap<Item, Integer> items = inventoryItems.getInventory();
 			HashMap<Item, Integer> items = engine.getPlayer().myInventory.getInventory();
 			
-			JPanelWithBackground invBG = new JPanelWithBackground("pictures/sno.jpg");
+			JPanelWithBackground invBG = new JPanelWithBackground("pictures/inventoryBG.jpg");
 			inventory.add(invBG);
-			invBG.setLayout(new GridLayout(4,4,1,1));
+			invBG.setLayout(new GridLayout(4,1,1,1));
+			
+			invBG.add(new JLabel("Ryggsäck",SwingConstants.CENTER));
 			
 			
 			
