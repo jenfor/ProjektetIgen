@@ -10,6 +10,7 @@ public class Sound {
      * Class-constructor
      */
 	static Clip clip;
+	static Clip clipLoop;
 	
 	public Sound(){
 		
@@ -36,7 +37,25 @@ public class Sound {
 		  }).start();
 	}
 	
+	public static synchronized void soundInLoop(final String url) {
+		new Thread(new Runnable() {
+			//vill man ha loop: byt ut clip mot loop, fungerar nog bara med wav
+			    public void run() {
+			      try {
+			    	clipLoop = AudioSystem.getClip();
+			        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+			        MiniGame.class.getResourceAsStream(url));
+			        clipLoop.open(inputStream);
+			        clipLoop.start(); 
+			        clipLoop.loop(1000);
+			      } catch (Exception e) {
+			        System.err.println(e.getMessage());
+			      }
+			    }
+			  }).start();
+	}
+	
 	public static synchronized void stopSound() {
-		clip.stop();
+		clipLoop.stop();
 	}
 }

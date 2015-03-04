@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Toolkit;
+
 
 
 
@@ -97,7 +97,8 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createCenterPanel()
 	{
-		
+		Sound.stopSound();
+		//Sound.soundInLoop("");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenSize.setSize( screenSize.getWidth() , (screenSize.getHeight() - 30) ); //-30 kompenserar för windows-menybaren
         double width = screenSize.getWidth();
@@ -184,6 +185,8 @@ public class PanelSklett implements Observer{
 	*/
 	private JPanel createShopPanel()
 	{
+		Sound.stopSound();
+		//Sound.soundInLoop("");
 		HashMap<Item, Boolean> shopItems = engine.shop.getShopItems();
 		
 		//**************************Skapa paneler**************************
@@ -341,7 +344,7 @@ public class PanelSklett implements Observer{
 	private JPanel createGardenPanel()
 	{
 		Sound.stopSound();
-		Sound.playSomeSound("beachsummer_image.wav");
+		Sound.soundInLoop("beachsummer_image.wav");
         
 		engine.userInventory.addObserver(this);
 		
@@ -513,7 +516,7 @@ public class PanelSklett implements Observer{
 			
 			JPanelWithBackground invBG = new JPanelWithBackground("pictures/inventoryBG.jpg");
 			inventory.add(invBG);
-			invBG.setLayout(new GridLayout(4,1,1,1));
+			invBG.setLayout(new GridLayout(4,1));
 			
 			JPanel panel = new JPanel();
 		    panel.setOpaque(false);

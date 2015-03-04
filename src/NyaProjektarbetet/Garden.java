@@ -61,7 +61,7 @@ public class Garden extends Room implements Serializable{
 	
 	
 	/**
-	* getGardenitem - gets the picture of a brick saved at a specific place in the garden.
+	* getGardenIcon - gets the picture of a brick saved at a specific place in the garden.
 	*
 	* @param  	lopnr   the position of a specific place in the garden.
 	* @return			a string that represents the picture saved at this position.                
