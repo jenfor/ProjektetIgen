@@ -297,7 +297,7 @@ public class UserInterface implements Observer{
 		 			 	
 		 	exitButton = new JButton("Avsluta");
 	        JButton button2 = new JButton(nextRoom);
-	        JButton mapButton = new JButton("Karta");
+	        JButton mapButton = new JButton("Position");
 	        JButton itemButton = new JButton("Föremål");
 	        //JButton moneyButton = new JButton("Pengar");
 	        moneyButton = new JLabel("     Pengar: " + engine.getPlayer().getMoney() + " kr     ");
@@ -366,7 +366,12 @@ public class UserInterface implements Observer{
 	        mapButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
-	            	JOptionPane.showMessageDialog(null, "Du är i " + engine.getCurrent(), "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            	if(engine.getCurrent().equals("center") )
+	            		JOptionPane.showMessageDialog(null, "Du är i centrum.", "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            	else if(engine.getCurrent().equals("shop") )
+	            		JOptionPane.showMessageDialog(null, "Du är i affären.", "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            	else if(engine.getCurrent().equals("garden") )
+	            		JOptionPane.showMessageDialog(null, "Du är på din tomt.", "Karta", JOptionPane.INFORMATION_MESSAGE);
 	            }
 	        });
 	        

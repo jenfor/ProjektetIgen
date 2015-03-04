@@ -109,13 +109,23 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createCenterPanel()
 	{
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.setSize( screenSize.getWidth() , (screenSize.getHeight() - 30) ); //-30 kompenserar för windows-menybaren
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        
+        Font font = new Font("Viner Hand ITC", Font.BOLD, 25);
+        
+        
+        
 	   	JPanel panel = new JPanel();    
 	    panel.setOpaque(false);
 	    //panel.setLayout(new GridLayout(4,4));
 	    panel.setLayout(null);
 	    
 
-	    //Tar in skyltbilden, skalar om den, sätter som ikon till JButton
+	    //Tar in skyltbilden, skalar om den, sparar som newIcon
     	URL imageURL = this.getClass().getClassLoader().getResource("skylt.png");
     	ImageIcon icon = new ImageIcon(imageURL);
 	    Image img = icon.getImage();
@@ -123,8 +133,6 @@ public class PanelSklett implements Observer{
 	    ImageIcon newIcon = new ImageIcon(newimg);
 	    
 	    JButton clickButton = new JButton ("Affär", newIcon);
-	    clickButton.setHorizontalTextPosition(JButton.CENTER);
-	    clickButton.setVerticalTextPosition(JButton.CENTER);
 	    
 	    clickButton.addActionListener(new ActionListener() {
 			
@@ -137,16 +145,16 @@ public class PanelSklett implements Observer{
 				
 			}
 		});
-	    clickButton.setBounds(200,100,200,100); //x,y,width,height
+	    clickButton.setHorizontalTextPosition(JButton.CENTER);
+	    clickButton.setVerticalTextPosition(JButton.CENTER);
+	    clickButton.setBounds((int)(width * 0.15),(int)(height * 0.2),(int)(width * 0.15),(int)(height * 0.15));//x,y,width,height
 	    clickButton.setContentAreaFilled(false);
-	    //clickButton.setBorderPainted(false); //med eller utan kant
+	    clickButton.setFont(font);
+	    clickButton.setForeground(Color.white); 		//färg på skyltens text
+	    clickButton.setBorderPainted(false); //med eller utan kant
 	    panel.add(clickButton);
 	    
-	    JButton clickButton2 = new JButton ("Trädgård");
-	    clickButton2.setBounds(300,400,200,200);
-	    clickButton2.setContentAreaFilled(false);
-	    //clickButton.setBorderPainted(false); //med eller utan kant
-	    panel.add(clickButton2);
+	    JButton clickButton2 = new JButton ("Trädgård", newIcon);
 	    
 	    clickButton2.addActionListener(new ActionListener() {
 			
@@ -159,13 +167,16 @@ public class PanelSklett implements Observer{
 				
 			}
 		});
+	    clickButton2.setHorizontalTextPosition(JButton.CENTER);
+	    clickButton2.setVerticalTextPosition(JButton.CENTER);
+	    clickButton2.setBounds((int)(width * 0.60),(int)(height * 0.70),(int)(width * 0.15),(int)(height * 0.15));//x,y,width,height
+	    clickButton2.setContentAreaFilled(false);
+	    clickButton2.setFont(font);
+	    clickButton2.setForeground(Color.white); 		//färg på skyltens text
+	    clickButton2.setBorderPainted(false); //med eller utan kant
+	    panel.add(clickButton2);
 	    
-	    
-	    JButton clickButton3 = new JButton ("Minispel");
-	    clickButton3.setBounds(800,400,200,200);
-	    clickButton3.setContentAreaFilled(false);
-	    //clickButton.setBorderPainted(false); //med eller utan kant
-	    panel.add(clickButton3);
+	    JButton clickButton3 = new JButton ("Minispel", newIcon);
 	    
 	    clickButton3.addActionListener(new ActionListener() {
 			
@@ -174,6 +185,14 @@ public class PanelSklett implements Observer{
 				new MiniGame();
 			}
 		});
+	    clickButton3.setBounds((int)(width * 0.80),(int)(height * 0.20),(int)(width * 0.15),(int)(height * 0.15));//x,y,width,height
+	    clickButton3.setContentAreaFilled(false);
+	    clickButton3.setFont(font);
+	    clickButton3.setForeground(Color.white); 		//färg på skyltens text
+	    clickButton3.setHorizontalTextPosition(JButton.CENTER);
+	    clickButton3.setVerticalTextPosition(JButton.CENTER);
+	    clickButton3.setBorderPainted(false); //med eller utan kant
+	    panel.add(clickButton3);
 	    
 	    return panel;
     
