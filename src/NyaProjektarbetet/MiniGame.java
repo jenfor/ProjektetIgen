@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -22,28 +23,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class MiniGame extends Room implements ActionListener,MouseListener{
+	private static final long serialVersionUID = 1L;
 	public JFrame window;
 	public JPanelWithBackground pan, pan2;
     public JButton startB;
     public JButton instructB, closeB, cash, replay, emptyButton;
     public JTextArea text =  new JTextArea();
     public JLabel contentPane;
-    
-    public Image grass;
      
 	public static JTextArea pointsSoFarText = new JTextArea();
-	//private static int mathSolution = 0;
-	//private static int product1 = 0;
-	//private static int product2 = 0;
-	
 	private static JTextArea mathProblem = new JTextArea();
-    
-    
-   // private boolean start = false;
+
     static boolean cursorClick = false;
     
-   // private int wrongAnsweres;
-    //private int score;
     public MiniGameActions miniGameActions;
     public Player player;
 
@@ -51,13 +43,8 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     {
     	this.player = player;
     	miniGameActions = new MiniGameActions(this);
-    	//this.miniGamePanel = miniGamePanel;
-    	
-    	//miniGamePanel.createMiniWindow();
-    	
     	window = new JFrame ("Whack A Mole-spel");
 		pan = new JPanelWithBackground("pictures/falt.jpg");
-
     	
     	ImageIcon end = new ImageIcon("pictures/avsluta.png");
     	ImageIcon inst = new ImageIcon("pictures/instruk.png");
@@ -65,17 +52,14 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     	ImageIcon sticon = new ImageIcon("pictures/start.png");
     	ImageIcon money = new ImageIcon("pictures/coinsS.png");
     	
-    	
     	closeB = new JButton(end);
     	startB = new JButton(icon);
     	instructB = new JButton(inst);
     	cash = new JButton(money);
     	
     	drawWindowWithThings();
-    	
-    	//byter bild
+
     	startB.setRolloverIcon(sticon);
-    	
     	
     	closeB.addActionListener(this);
     	startB.addActionListener(this);
@@ -85,6 +69,9 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     	window.setVisible(true);
     }
     
+    /**
+     * Adds components (buttons) to the visible JFrame and JPanel.
+     */
     public void drawWindowWithThings(){
 
     	window.add(pan);
@@ -109,11 +96,14 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     	pan.add(instructB);
     	pan.add(startB);
      	pan.add(cash);
-     	
     	pan.add(text);
-
     }
-
+    
+    /**
+     * Class-constructor
+     * 
+     * @param minigame
+     */
     public void actionPerformed (ActionEvent e)
     {
 		if (e.getSource() == startB)
@@ -124,16 +114,18 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	    	startMoleGame();
 		}
 		else if (e.getSource() == closeB){
+			Sound.stopSound();
 			if( miniGameActions.getScore() > 0 ){
 				player.changeMoney(miniGameActions.getScore());
 			}
-			window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+			Sound.stopSound();
+			window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));	
 		}
 		else if (e.getSource() == instructB)
 		{
 			Sound.playSomeSound("Randomize8.wav");
-			text.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 22));
-			text.setText("  Spelinstruktioner:\n  Klicka på mullvaderna som visar rätt svar till matteproblemet\n  för att vinna pengar.");
+			text.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 21));
+			text.setText("  Spelinstruktioner:\n  Klicka på mullvaderna som visar rätt svar till matteproblemet\n  för att vinna pengar. \n  Rätt svar ger 10 kr och fel svar ger -2 kr. \n  Vinner man inget alls tas inga pengar bort.");
 		    text.setEditable(false);
 		}
 		else if (e.getSource() == replay)
@@ -215,7 +207,6 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	 * Creates a field of moles
 	 */
 	public void createMole(){
-    	int a = 1;
     	int b = 0;
     	
     	String label = "";
@@ -257,8 +248,6 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
         		pan2.add(moleIm);
         		moleIm.addMouseListener(this);
     		}
-    		
-    		a+=100;
     	}
     	window.pack();
 	}

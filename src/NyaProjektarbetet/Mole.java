@@ -24,7 +24,7 @@ import java.util.Random;
 public class Mole extends JButton implements ActionListener {
 	MoleActions actions;
     private Timer timer;                        // för start/stop actions
-    private int animationDuration = 2500; 		// varje animation tar 3 s
+    private int animationDuration = 2300; 		// varje animation tar 2,3 s
     private long animStartTime;    				// starta tiden för varje animation
     private int translateY = 0;                 // knappens y position
     private static final int MAX_Y = 100;
