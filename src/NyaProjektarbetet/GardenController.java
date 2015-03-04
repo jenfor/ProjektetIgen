@@ -76,13 +76,13 @@ public class GardenController extends Observable{
 			if(i.getItemPicture().equals(icon))
 			{
 				
-				int nr = inventory.get(i/*icon*/);	
-				nr++;
-				setChanged();
-				notifyObservers(nr);
-				inventory.put(i/*icon*/, nr);
+				//int nr = inventory.get(i/*icon*/);	
+				//nr++;
+				//setChanged();
+				//notifyObservers(nr);
+				//inventory.put(i/*icon*/, nr);
 				
-				//engine.userInventory.updateInventory(i, 1); //---------------------Linns experiment
+				engine.userInventory.updateInventory(i, 1); //---------------------Linns experiment
 			}
 		//}
 		//System.out.println("Detta är vad som finns sparat i inventory efter att " +icon+" har plockats tillbaka:  "+ inventory);
@@ -140,15 +140,15 @@ public class GardenController extends Observable{
 				if(i.getItemPicture().equals(takenImage))
 				{
 					
-				    int nr = 0;
+				    //int nr = 0;
 				    /*if(inventory.containsKey(takenImage)){*/
-					nr =inventory.get(i/*takenImage*/);
-					nr--;
-					setChanged();
-					notifyObservers(nr); 
-					inventory.put(i/*takenImage*/, nr);
+					//nr =inventory.get(i/*takenImage*/);
+					//nr--;
+					//setChanged();
+					//notifyObservers(nr); 
+					//inventory.put(i/*takenImage*/, nr);
 					
-					//engine.userInventory.updateInventory(i, -1); //-----------------Linns experiment
+					engine.userInventory.updateInventory(i, -1); //-----------------Linns experiment
 				}
 		    }
 			

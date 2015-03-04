@@ -49,30 +49,22 @@ import minTestzon.UserInterface;*/
 public class PanelSklett implements Observer{
 	private GameEngine engine;
 	private JPanel panelClickable;
-	//private UserInterface ui;
 	private ArrayList<JButton> itemButtons = new ArrayList<JButton>();
-	//private Inventory inventoryItems = new Inventory();
 	private int presentItem; 
 	private HashMap<Integer, JButton> panelButtons = new  HashMap<Integer, JButton>();
 	private HashMap<Item, JButton> panelButtons2 = new  HashMap<Item, JButton>();
 	private HashMap<String, Integer> rightPanel = new  HashMap<String, Integer>();
-	//public JButton moneyLabel;
 	
-	/*public Room center;
-	public Room shop;
-	public Room garden;
-	public Room miniGame1;
-	public Room miniGame2;*/
 
 	private ShopController shopControl;
 	public GardenController gardenController;
 	//public Inventory in = new Inventory();
-	public JButton itemsLeft = null;
+	//public JButton itemsLeft = null;
 	public JButton itemsLeft2;
 	
 	//*******Experiment
-	JButton kurt;
-	String ex;
+	//JButton kurt;
+	//String ex;
 	
 	
 	public PanelSklett(GameEngine e, UserInterface ui)
@@ -531,41 +523,28 @@ public class PanelSklett implements Observer{
 					
 			    });	
 			    
-			    // Visa antal  tillgänliga Items
-			    int x = entry.getValue();
-			    itemsLeft = new JButton();
-			    itemsLeft.setText("" + x);
-			    itemsLeft.setBounds(column-15, rad+30,60,30);
-			    itemsLeft.setContentAreaFilled(false);//Osynlighet
-			    itemsLeft.setBorderPainted(false);//Osynlighet
 			    
 			    
-			    //***** Experiment: Visa antal  tillgänliga Items på annat sätt
-			    /*itemsLeft2 = new JButton();
+			    //Visa antal  tillgänliga Items
+			    itemsLeft2 = new JButton();
 			    itemsLeft2.setText("" + entry.getValue());
 			    itemsLeft2.setBounds(column-2, rad+30,60,30);
 			    itemsLeft2.setContentAreaFilled(false);//Osynlighet
 			    itemsLeft2.setBorderPainted(false);//Osynlighet
-			    showInventory.add(itemsLeft2);*/
-			    
-			    
-			    
+			    showInventory.add(itemsLeft2);
 			    
 			    
 			    
 			    //Spara referens till just denna rutan
 			    
-			    panelButtons.put(buttonNr, itemsLeft);
 			    panelButtons2.put(item, itemsLeft2);
 			    
 			     
 			    //*****************************************************************
 			    
-			   
 			   		    
 			    //Lägg till bild och antal 
 			    showInventory.add(showItem);
-			    showInventory.add(itemsLeft);
 			    
 			    // Byt till ny position
 			    rad= rad +60;
@@ -573,12 +552,13 @@ public class PanelSklett implements Observer{
 	        
 	        //**************Experiment********************
 		   
-		    kurt = new JButton();
+	        
+		    /*kurt = new JButton();
 		    kurt.setBounds(0,rad +30 ,100,30);
 		    kurt.setContentAreaFilled(false);//Osynlighet
 		    kurt.setBorderPainted(false);//Osynlighet
 		    
-		    showInventory.add(kurt);
+		    showInventory.add(kurt);*/
 		    
 		    
 		   //*****************************************************************
@@ -671,12 +651,12 @@ public class PanelSklett implements Observer{
 		Item temp; //-------
 		temp = new Item(200, 2, "fish.png", "tomt item");
 		
-		if(obj instanceof GardenController && arg instanceof Integer)
+		/*if(obj instanceof GardenController && arg instanceof Integer)
 		{
 			panelButtons.get(presentItem).setText("" + arg);
 			//itemsLeft.setText("" + arg);
 			kurt.setText("kvar:"+ arg);
-		}
+		}*/
 		
 		if ( obj instanceof Inventory && arg instanceof Item ){
 			temp = (Item)arg;
