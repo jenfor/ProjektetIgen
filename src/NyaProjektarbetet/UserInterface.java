@@ -242,8 +242,31 @@ public class UserInterface implements Observer{
         			JOptionPane.showMessageDialog( null, "[hjälp kommer senare]","Hjäälp",JOptionPane.OK_CANCEL_OPTION); 
         		}
         });
-        
         menu.add(menuItem);
+        
+        menuItem = new JMenuItem("Om spelet",
+                new ImageIcon("images/middle.gif"));
+        menuItem.setMnemonic(KeyEvent.VK_C);
+        menuItem.addActionListener(new ActionListener() {
+        		@Override
+        		public void actionPerformed(ActionEvent event) {
+        			JOptionPane.showMessageDialog( null, "Mattespel Version: 1.0 ","Om spelet",JOptionPane.OK_CANCEL_OPTION); 
+        		}
+        });
+        menu.add(menuItem);
+        
+        menuItem = new JMenuItem("?",
+                new ImageIcon("images/middle.gif"));
+        menuItem.setMnemonic(KeyEvent.VK_C);
+        menuItem.addActionListener(new ActionListener() {
+        		@Override
+        		public void actionPerformed(ActionEvent event) {
+        			JOptionPane.showMessageDialog( null, "Varsågod, 1000 kr","???",JOptionPane.OK_CANCEL_OPTION); 
+        			engine.getPlayer().changeMoney(1000);
+        		}
+        });
+        menu.add(menuItem);
+        
         myFrame.setJMenuBar(menuBar);
         
         myFrame.addWindowListener(new WindowAdapter() {
@@ -367,11 +390,11 @@ public class UserInterface implements Observer{
 	            @Override
 	            public void actionPerformed(ActionEvent event) {
 	            	if(engine.getCurrent().equals("center") )
-	            		JOptionPane.showMessageDialog(null, "Du är i centrum.", "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är i centrum.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            	else if(engine.getCurrent().equals("shop") )
-	            		JOptionPane.showMessageDialog(null, "Du är i affären.", "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är i affären.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            	else if(engine.getCurrent().equals("garden") )
-	            		JOptionPane.showMessageDialog(null, "Du är på din tomt.", "Karta", JOptionPane.INFORMATION_MESSAGE);
+	            		JOptionPane.showMessageDialog(null, "Du är på din tomt.", "Position", JOptionPane.INFORMATION_MESSAGE);
 	            }
 	        });
 	        
