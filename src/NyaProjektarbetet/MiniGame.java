@@ -51,8 +51,6 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 
     public MiniGame(Player player)
     {
-    	Sound.stopSound();
-		//Sound.soundInLoop("");
     	this.player = player;
     	miniGameActions = new MiniGameActions(this);
     	//this.miniGamePanel = miniGamePanel;

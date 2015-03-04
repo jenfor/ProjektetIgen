@@ -523,7 +523,9 @@ public class PanelSklett implements Observer{
 		    panel.setLayout(new GridLayout(4,1));
 		    invBG.add(panel);
 			
-		    invBG.add(new JLabel("Ryggsäck"));
+		    JLabel title = new JLabel("Ryggsäck");
+		    title.setFont(new Font("Viner Hand ITC", Font.BOLD, 50));
+		    invBG.add(title);
 			
 			for (Entry<Item, Integer> entry : items.entrySet() ) {
 				
