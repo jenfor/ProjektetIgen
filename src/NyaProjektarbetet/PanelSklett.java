@@ -626,9 +626,12 @@ public class PanelSklett implements Observer{
 			inventory.add(invBG);
 			invBG.setLayout(new GridLayout(4,1,1,1));
 			
-			invBG.add(new JLabel("Ryggsäck",SwingConstants.CENTER));
+			JPanel panel = new JPanel();
+		    panel.setOpaque(false);
+		    panel.setLayout(new GridLayout(4,1));
+		    invBG.add(panel);
 			
-			
+		    invBG.add(new JLabel("Ryggsäck"));
 			
 			for (Entry<Item, Integer> entry : items.entrySet() ) {
 			//for (HashMap.Entry<Item, Integer> entry : items.entrySet() ) {
