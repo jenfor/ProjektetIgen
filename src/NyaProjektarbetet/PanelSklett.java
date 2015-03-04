@@ -32,6 +32,7 @@ import java.awt.Toolkit;
 
 
 
+
 //import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -388,7 +389,7 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createGardenPanel()
 	{
-		
+		Sound.playSomeSound("beachsummer_image.wav");
 		engine.userInventory.addObserver(this);
 		
 		JPanel panel = new JPanel(); 

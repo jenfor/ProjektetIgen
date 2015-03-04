@@ -95,6 +95,8 @@ public class UserInterface implements Observer{
             	engine.changeRoom("center");
             }	
         });
+        
+        Sound.playSomeSound("start.wav");
 		
         myFrame.pack();
         myFrame.setVisible(true);
@@ -168,7 +170,7 @@ public class UserInterface implements Observer{
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	int svar = JOptionPane.showConfirmDialog(null, "Vill du lämna spelet utan att spara?", "Avsluta", JOptionPane. YES_NO_OPTION);
+            	int svar = JOptionPane.showConfirmDialog(null, "Vill du lämna spelet nu?", "Avsluta", JOptionPane. YES_NO_OPTION);
             	if(svar == JOptionPane.YES_OPTION)
             		System.exit(0);
             }
