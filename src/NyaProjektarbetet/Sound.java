@@ -36,6 +36,24 @@ public class Sound {
 		  }).start();
 	}
 	
+	public static synchronized void soundInLoop(final String url) {
+		new Thread(new Runnable() {
+			//vill man ha loop: byt ut clip mot loop, fungerar nog bara med wav
+			    public void run() {
+			      try {
+			        clip = AudioSystem.getClip();
+			        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+			        MiniGame.class.getResourceAsStream(url));
+			        clip.open(inputStream);
+			        clip.start(); 
+					clip.loop(1000);
+			      } catch (Exception e) {
+			        System.err.println(e.getMessage());
+			      }
+			    }
+			  }).start();
+	}
+	
 	public static synchronized void stopSound() {
 		clip.stop();
 	}

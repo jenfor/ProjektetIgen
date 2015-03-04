@@ -102,7 +102,7 @@ public class UserInterface implements Observer{
             }	
         });
         
-        Sound.playSomeSound("start.wav");
+        Sound.soundInLoop("start.wav");
 		
         myFrame.pack();
         myFrame.setVisible(true);
