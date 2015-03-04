@@ -8,6 +8,12 @@ import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * This class communicates between Garden, Inventory and RoomPanel.
+ * 
+ * @author 
+ * @version 2015-03-04
+ */
 
 public class GardenController extends Observable{
 	

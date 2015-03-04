@@ -7,6 +7,13 @@ import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * This class saves the specific things that makes the garden.
+ * 
+ * @author 
+ * @version 2015-03-04
+ */
+
 public class Garden extends Room implements Serializable{
 	
 	public HashMap<Integer, String> gardenItems; //där Integer är löpnummer och String Items bild 

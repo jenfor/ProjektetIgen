@@ -34,16 +34,12 @@ import java.awt.Toolkit;
 import javax.swing.JTextField;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-/*
-import minTestzon.Center;
-import minTestzon.GameEngine;
-import minTestzon.Garden;
-import minTestzon.GardenController;
-import minTestzon.Inventory;
-import minTestzon.MiniGame;
-import minTestzon.Room;
-import minTestzon.Shop;
-import minTestzon.UserInterface;*/
+/**
+ * This class makes different panels for different rooms.
+ * 
+ * @author 
+ * @version 2015-03-04
+ */
 
 
 public class PanelSklett implements Observer{

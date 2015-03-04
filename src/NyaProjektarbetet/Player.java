@@ -12,7 +12,7 @@ public class Player extends Observable implements Serializable {
 	public Player(){
 		//myInventory = new Inventory();
 		level = 1;
-		money = 1000;
+		money = 100000;
 	}
 	
 	public void setInventory(Inventory in){
