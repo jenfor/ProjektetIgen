@@ -36,6 +36,11 @@ public class Inventory extends Observable implements Serializable {
 		Item blueBrick = new Item(100, 1, "BrickBlue.png", "Blå tegelsten");
 		Item redBrick = new Item(200, 1, "BrickRed.png", "Röd tegelsten");
 		Item fishBrick = new Item(200, 2, "fish.png", "Fisksten");
+		Item pyramid1 = new Item(200, 1, "pyramid_vertical.png", "Pyramidsten");
+		Item pyramid2 = new Item(200, 1, "pyramid_horizontal.png", "Pyramidsten");
+		
+		items.put(pyramid2, 0);
+		items.put(pyramid1, 0);
 		items.put(fishBrick, 0);
 		items.put(redBrick, 0);
 		items.put(blueBrick, 0);
