@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Toolkit;
+
 
 
 
@@ -184,6 +184,8 @@ public class PanelSklett implements Observer{
 	*/
 	private JPanel createShopPanel()
 	{
+		Sound.stopSound();
+		//Sound.soundInLoop("");
 		HashMap<Item, Boolean> shopItems = engine.shop.getShopItems();
 		
 		//**************************Skapa paneler**************************
@@ -341,7 +343,7 @@ public class PanelSklett implements Observer{
 	private JPanel createGardenPanel()
 	{
 		Sound.stopSound();
-		Sound.playSomeSound("beachsummer_image.wav");
+		Sound.soundInLoop("beachsummer_image.wav");
         
 		engine.userInventory.addObserver(this);
 		

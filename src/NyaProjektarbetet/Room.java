@@ -36,7 +36,7 @@ public class Room implements Serializable{
 		if(current.equals("shop"))
 		{
 			
-			return "pictures/wood_shelves3.png";
+			return "pictures/wood_shelves3.jpg";
 			
 		}
 		
