@@ -8,11 +8,12 @@ import javax.swing.JOptionPane;
 public class Shop extends Room{
 	private HashMap<Item, Boolean> shopItems; //Boolean = får spelaren köpa föremålet?
 	private Player player;
+	String shopPicture;
 	
 	public Shop(HashMap<Item, Integer> inventory, Player player){
 		shopItems = new HashMap<Item, Boolean>();
 		this.player = player;
-
+		shopPicture = "pictures/wood_shelves3.png";
 		
 		for(Item item : inventory.keySet() ){	//Lägger in alla föremål i affären
 			shopItems.put(item, false);			//Men sätter att inget kan köpas än
@@ -61,6 +62,12 @@ public class Shop extends Room{
 			JOptionPane.showMessageDialog(null, "... men du har för lågt level.", "", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
+	public String getPicture(String current)
+	{
+		return shopPicture;
+	}
+	
 
 	
 }
