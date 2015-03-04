@@ -10,56 +10,76 @@ import javax.swing.ImageIcon;
 /**
  * This class saves the specific things that makes the garden.
  * 
- * @author 
+ * @author Jenny Forsberg
  * @version 2015-03-04
  */
 
 public class Garden extends Room implements Serializable{
 	
-	public HashMap<Integer, String> gardenItems; //där Integer är löpnummer och String Items bild 
-	
-	//private Item gardenItem;
+	public HashMap<Integer, String> gardenItems;  
 	private String gardenPicture;
+	
 	
 	public Garden(){
 		gardenItems = new HashMap<Integer, String>();
 		gardenPicture="pictures/strand.jpg"; 
 		}
 	
+	
+	/**
+	 * getGardenItems - gets all the pictures and their places from garden .
+	 *
+	 * @return  		a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
+	 *       
+	 */
+	
 	public HashMap<Integer, String> getGardenItems(){
 		return gardenItems;
 	}
 	
 		
-		public void addItem(int lopnr, String icon){
-			gardenItems.put(lopnr, icon); //lägger till iconbildens filnamn på given position
-			//System.out.println("Nu är vi i Gardens addItem med löpnr: "+ lopnr);
-			//System.out.println("Detta är vad som finns sparat i trädgården "+ gardenItems);
-		}
+	/**
+	 * add - adds an Itempicture whit the number of a specific button in garden where it will be saved .
+	 *
+	 * @param  lopnr   the number of the specific button where the picture will be saved.
+	 * @param  icon    a string which represents the picture that will be saved here.
+	 * 
+	 */
 		
-		public void removeItem(int lopnr){
-			gardenItems.remove(lopnr); //Tar bort bild från plats
-			//System.out.println("Nu är vi i Gardens remove"+ lopnr);
-		}
+	public void addItem(int lopnr, String icon){
+			gardenItems.put(lopnr, icon); 
+	}
+	
 		
-		public String getGardenIcon(int lopnr){
-			 //Hämtar bilden till en speciell plats i Garden
-			//System.out.println("Nu är vi i Gardens getGardenIcon med löpnr: "+ lopnr);
-			//System.out.println("Ja det är gardens getGardenIcon som kör");
-			//return "pictures/BrickBlue.png";
-			return  gardenItems.get(lopnr);
-			
-			
-		}
+	/**
+	 * removeItem - removes an Itempicture from a specific button in garden where it was saved .
+	 *
+	 * @param  lopnr   the number of the specific button where the picture was saved.
+	 *
+	 */
+
+	public void removeItem(int lopnr){
+			gardenItems.remove(lopnr); 
+	}
+	
+	
+	/**
+	 * getGardenitem - gets the picture saved at a specific place in garden.
+	 *
+	 * @param  	lopnr   the number of the specific button where the picture migth be saved.
+	 * @return	a string that represtens the picture saved at this position.                
+	 */
 		
-		@Override
-		public String getPicture(String current)
-		{
-			return gardenPicture;
-		}
+	public String getGardenIcon(int lopnr){
 		
-		public Item getItem(){
-			Item blueBrick = new Item(100, 1, "BrickBlue.png", "Blå tegelsten");
-			return blueBrick;
-		}
+		return  gardenItems.get(lopnr);
+	}
+		
+	
+	public String getPicture(String current)
+	{
+		return gardenPicture;
+	}
+	
+	
 }
