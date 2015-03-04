@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 
 public class Garden extends Room implements Serializable{
 	
-	public HashMap<Integer, String> gardenItems;  
+	private HashMap<Integer, String> gardenItems;  
 	private String gardenPicture;
 	
 	
@@ -27,55 +27,57 @@ public class Garden extends Room implements Serializable{
 	
 	
 	/**
-	 * getGardenItems - gets all the pictures and their places from garden .
-	 *
-	 * @return  		a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
-	 *       
-	 */
-	
+	* getGardenItems - gets all the pictures and their places from garden .
+	*
+	* @return  	a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
+	*       
+	*/	
 	public HashMap<Integer, String> getGardenItems(){
 		return gardenItems;
 	}
 	
 		
 	/**
-	 * add - adds an Itempicture whit the number of a specific button in garden where it will be saved .
-	 *
-	 * @param  lopnr   the number of the specific button where the picture will be saved.
-	 * @param  icon    a string which represents the picture that will be saved here.
-	 * 
-	 */
-		
+	* add - adds an Itempicture whit the number of a specific button in garden where it will be saved .
+	*
+	* @param  lopnr   the number of the specific button where the picture will be saved.
+	* @param  icon    a string which represents the picture that will be saved here.
+	* 
+	*/
 	public void addItem(int lopnr, String icon){
 			gardenItems.put(lopnr, icon); 
 	}
 	
 		
 	/**
-	 * removeItem - removes an Itempicture from a specific button in garden where it was saved .
-	 *
-	 * @param  lopnr   the number of the specific button where the picture was saved.
-	 *
-	 */
-
+	* removeItem - removes an Itempicture from a specific button in garden where it was saved .
+	*
+	* @param  lopnr   the number of the specific button where the picture was saved.
+	*
+	*/
 	public void removeItem(int lopnr){
 			gardenItems.remove(lopnr); 
 	}
 	
 	
 	/**
-	 * getGardenitem - gets the picture saved at a specific place in garden.
-	 *
-	 * @param  	lopnr   the number of the specific button where the picture migth be saved.
-	 * @return	a string that represtens the picture saved at this position.                
-	 */
-		
+	* getGardenitem - gets the picture saved at a specific place in garden.
+	*
+	* @param  	lopnr   the number of the specific button where the picture migth be saved.
+	* @return			a string that represents the picture saved at this position.                
+	*/
 	public String getGardenIcon(int lopnr){
 		
 		return  gardenItems.get(lopnr);
 	}
-		
 	
+	
+	/**
+	* getPicture - gets the backgroundpicture for garden.
+	*
+	* @param  	current the name of the the current room	
+	* @return			a string that represents the backgroundpicture for garden.                
+	*/
 	public String getPicture(String current)
 	{
 		return gardenPicture;

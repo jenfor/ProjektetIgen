@@ -58,9 +58,6 @@ public class PanelSklett implements Observer{
 	//public JButton itemsLeft = null;
 	public JButton itemsLeft2;
 	
-	//*******Experiment
-	//JButton kurt;
-	//String ex;
 	
 	
 	public PanelSklett(GameEngine e, UserInterface ui)
@@ -582,17 +579,7 @@ public class PanelSklett implements Observer{
 			    rad= rad +60;
 	    }
 	        
-	        //**************Experiment********************
-		   
-	        
-		    /*kurt = new JButton();
-		    kurt.setBounds(0,rad +30 ,100,30);
-		    kurt.setContentAreaFilled(false);//Osynlighet
-		    kurt.setBorderPainted(false);//Osynlighet
-		    
-		    showInventory.add(kurt);*/
-		    
-		    
+	        		    
 		   //*****************************************************************
 		    
 	     panel.add(showInventory);
