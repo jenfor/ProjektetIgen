@@ -45,9 +45,11 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
    // private int wrongAnsweres;
     //private int score;
     public MiniGameActions miniGameActions;
+    public Player player;
 
-    public MiniGame()
+    public MiniGame(Player player)
     {
+    	this.player = player;
     	miniGameActions = new MiniGameActions(this);
     	//this.miniGamePanel = miniGamePanel;
     	
@@ -116,16 +118,17 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     {
 		if (e.getSource() == startB)
 		{
-		    //ersätt innhållet i pan med spelet
-			//start = true;
 	    	window.remove(pan);
 
 	    	Sound.playSomeSound("Randomize27.wav");
 	    	startMoleGame();
 		}
-		else if (e.getSource() == closeB)
+		else if (e.getSource() == closeB){
+			if( miniGameActions.getScore() > 0 ){
+				player.changeMoney(miniGameActions.getScore());
+			}
 			window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
-
+		}
 		else if (e.getSource() == instructB)
 		{
 			Sound.playSomeSound("Randomize8.wav");
@@ -208,9 +211,8 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	public void mouseExited(MouseEvent e) {
 	}
 
-    //senare ver, tar in int som anger multitabell
 	/**
-	 * Skapar fältet av mullvadar
+	 * Creates a field of moles
 	 */
 	public void createMole(){
     	int a = 1;

@@ -161,7 +161,7 @@ public class PanelSklett implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new MiniGame();
+				new MiniGame(engine.getPlayer());
 			}
 		});
 	    clickButton3.setBounds((int)(width * 0.80),(int)(height * 0.20),(int)(width * 0.15),(int)(height * 0.15));//x,y,width,height
