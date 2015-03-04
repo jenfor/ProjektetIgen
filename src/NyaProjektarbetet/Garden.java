@@ -27,7 +27,7 @@ public class Garden extends Room implements Serializable{
 	
 	
 	/**
-	* getGardenItems - gets all the pictures and their places from garden .
+	* getGardenItems - gets all the pictures and their places in garden .
 	*
 	* @return  	a hasmap where strings representing pictures are saved whit specific numbers of the buttons where they are saved. 
 	*       
@@ -63,7 +63,7 @@ public class Garden extends Room implements Serializable{
 	/**
 	* getGardenitem - gets the picture saved at a specific place in garden.
 	*
-	* @param  	lopnr   the number of the specific button where the picture migth be saved.
+	* @param  	lopnr   the number of the specific button where a picture might be saved.
 	* @return			a string that represents the picture saved at this position.                
 	*/
 	public String getGardenIcon(int lopnr){
