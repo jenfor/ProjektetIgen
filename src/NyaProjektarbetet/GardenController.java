@@ -32,7 +32,8 @@ public class GardenController extends Observable{
 	/**
 	* setInventory - updates GardenControllers inventory.
 	*
-	* @param  	in  inventory whit the latest changes		              
+	* @param  	in  	inventory whit the latest changes
+	* 		              
 	*/
 	public void setInventory(Inventory in){
 		inventory = in.getInventory(); 
@@ -51,12 +52,13 @@ public class GardenController extends Observable{
 	
 
 	/**
-	* getIcon - gets the picture saved at a specific place in garden..
+	* getIcon - gets the image of a brick saved at a specific place in the garden.
 	*
-	* @param  	lopnr   the number of the specific button where a picture might be saved.
-	* 	
-	* @return			a string that represents the picture saved at this position.                
+	* @param  	lopnr   the position of a specific place in the garden.
+	* 	 
+	* @return			a string that represents an image of a brick.                
 	*/
+	
 	public String getIcon(int lopnr)
 	{
 		return engine.garden.getGardenIcon(lopnr);
@@ -64,10 +66,10 @@ public class GardenController extends Observable{
 	
 	
 	/**
-	* remove - removes an Itempicture from a specific button in the garden where it was saved
+	* remove - removes the image of a brick from a specific place in the garden
 	* 		   and informs the present inventory of the change.
 	*
-	* @param  lopnr   the number of the specific button where the picture was saved.
+	* @param  lopnr   the position of a specific place in the garden.
 	*
 	*/
 	public void remove(int lopnr)
@@ -87,10 +89,9 @@ public class GardenController extends Observable{
 	
 	
 	/**
-	* take - removes an Itempicture from a specific button in the garden where it was saved
-	* 		   and informs the present inventory of the change.
+	* take - remembers what image of a brick  the user has taken.
 	*
-	* @param  lopnr   the number of the specific button where the picture was saved.
+	* @param  imageOfItem   a string that represents the taken image of a brick.
 	*
 	*/
 	public void take(String imageOfItem)
@@ -99,64 +100,52 @@ public class GardenController extends Observable{
 	}
 	
 	
+	/**
+	* getTakenImage - gets the taken image of a brick if it's allowed.
+	*
+	* @return 	a string that represents the taken image of a brick or null.
+	*
+	*/
 	public String getTakenImage()
 	{
-		//System.out.println("Bilden som följde med till GardenControllers getTakenItem är: : " +takenImage );
 		for(Item i: inventory.keySet())
 		{
 			if(i.getItemPicture().equals(takenImage))
 			{
-				//if(inventory.get(takenImage)!=0 /*&& inventory.get(i/*takenImage*/)/*!=null)*/
-				//{
-					if(inventory.get(i/*takenImage*/)!=null)
-						if(inventory.get(i) > 0 )
-						{
-							return takenImage;
-						}
-				//}
-			    
+				if(inventory.get(i)!=null)
+				{
+					if(inventory.get(i) > 0 )
+					{
+						return takenImage;
+					}
+				}
 			}
 		}
 		
-			    /*else*/
-		//return null;
 		return null;
-		
 	}
 	
+	
+	/**
+	* build - saves the taken image of a brick at a specific place in the garden
+	* 		  and informs the present inventory of the change.
+	*
+	* @param  	lopnr   the position of a specific place in the garden.
+	* 	                 
+	*/
 	public void build(int lopnr)
 	{
-		//System.out.println("Inventory i PanelSklett: " + engine.userInventory.getInventory());
-        //System.out.println("Inventory i GardenController: " + inventory);
-        
 		if(takenImage != null)
 		{
-			//System.out.println("takenItem är: : " +takenItem );
-			//System.out.println("icon är: : " +icon );
 			engine.garden.addItem(lopnr, takenImage);
-			//System.out.println("Nu är vi i build"+ lopnr);
 			
-			
-			//Minska värdet på key:n ImageIcon med 1
 			for(Item i: inventory.keySet())
 			{
 				if(i.getItemPicture().equals(takenImage))
 				{
-					
-				    //int nr = 0;
-				    /*if(inventory.containsKey(takenImage)){*/
-					//nr =inventory.get(i/*takenImage*/);
-					//nr--;
-					//setChanged();
-					//notifyObservers(nr); 
-					//inventory.put(i/*takenImage*/, nr);
-					
-					engine.userInventory.updateInventory(i, -1); //-----------------Linns experiment
+					engine.userInventory.updateInventory(i, -1);
 				}
 		    }
-			
-			
-		
-		}	
+		}
 	}
 }

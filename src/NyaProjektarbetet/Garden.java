@@ -38,10 +38,10 @@ public class Garden extends Room implements Serializable{
 	
 		
 	/**
-	* add - adds an Itempicture whit the number of a specific button in garden where it will be saved .
+	* add - saves a picture of a brick at at specific place in the garden. 
 	*
-	* @param  lopnr   the number of the specific button where the picture will be saved.
-	* @param  icon    a string which represents the picture that will be saved here.
+	* @param  lopnr   the position of a specific place in the garden.
+	* @param  icon    a string that represents a picture of a brick.
 	* 
 	*/
 	public void addItem(int lopnr, String icon){
@@ -50,9 +50,9 @@ public class Garden extends Room implements Serializable{
 	
 		
 	/**
-	* removeItem - removes an Itempicture from a specific button in garden where it was saved .
+	* removeItem - removes a picture of a brick at at specific place in the garden.
 	*
-	* @param  lopnr   the number of the specific button where the picture was saved.
+	* @param  lopnr   the position of a specific place in the garden.
 	*
 	*/
 	public void removeItem(int lopnr){
@@ -61,9 +61,9 @@ public class Garden extends Room implements Serializable{
 	
 	
 	/**
-	* getGardenitem - gets the picture saved at a specific place in garden.
+	* getGardenitem - gets the picture of a brick saved at a specific place in the garden.
 	*
-	* @param  	lopnr   the number of the specific button where a picture might be saved.
+	* @param  	lopnr   the position of a specific place in the garden.
 	* @return			a string that represents the picture saved at this position.                
 	*/
 	public String getGardenIcon(int lopnr){
