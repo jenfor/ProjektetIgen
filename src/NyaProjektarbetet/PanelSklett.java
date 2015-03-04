@@ -9,6 +9,7 @@ import java.awt.Image;
 //import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,11 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +33,8 @@ import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+
+
 
 
 
@@ -389,7 +397,9 @@ public class PanelSklett implements Observer{
 	
 	private JPanel createGardenPanel()
 	{
+		Sound.stopSound();
 		Sound.playSomeSound("beachsummer_image.wav");
+        
 		engine.userInventory.addObserver(this);
 		
 		JPanel panel = new JPanel(); 

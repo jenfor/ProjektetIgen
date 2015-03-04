@@ -9,6 +9,8 @@ public class Sound {
     /**
      * Class-constructor
      */
+	static Clip clip;
+	
 	public Sound(){
 		
 	}
@@ -22,7 +24,7 @@ public class Sound {
 		//vill man ha loop: byt ut clip mot loop, fungerar nog bara med wav
 		    public void run() {
 		      try {
-		        Clip clip = AudioSystem.getClip();
+		        clip = AudioSystem.getClip();
 		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
 		        MiniGame.class.getResourceAsStream(url));
 		        clip.open(inputStream);
@@ -32,5 +34,9 @@ public class Sound {
 		      }
 		    }
 		  }).start();
+	}
+	
+	public static synchronized void stopSound() {
+		clip.stop();
 	}
 }
