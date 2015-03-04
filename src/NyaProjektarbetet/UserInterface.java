@@ -285,7 +285,7 @@ public class UserInterface implements Observer{
 	}
 	
 	 public void createGUI() {
-		 	engine.getPlayer().addObserver(this);
+		 	
 		
 	        image ="pictures/startbackground.jpg";
 	        
@@ -319,6 +319,7 @@ public class UserInterface implements Observer{
 	 //***************************Spelmenyn med pengar, föremål etc*****************************
 	 private void addBorderLayout(JPanel pa, String current)
 	 {
+		 	engine.getPlayer().addObserver(this);
 		 	
 		 	//int i = 0;
 		 	String nextRoom = "Centrum";

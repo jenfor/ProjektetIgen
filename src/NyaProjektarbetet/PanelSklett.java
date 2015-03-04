@@ -9,7 +9,6 @@ import java.awt.Image;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +17,6 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,15 +27,8 @@ import javax.swing.JPanel;
 import java.awt.Toolkit;
 
 
-
-
-
-
-
-
-//import java.awt.Image;
 import javax.swing.JTextField;
-import javax.swing.text.html.HTMLDocument.Iterator;
+
 
 /**
  * This class makes different panels for different rooms.
@@ -73,6 +60,8 @@ public class PanelSklett implements Observer{
 		gardenController.addObserver(this);
 		
 	}
+	
+	
 	/**
 	* getPanel - gets the right panel for the right room.
 	*
@@ -89,12 +78,13 @@ public class PanelSklett implements Observer{
 		return panelClickable;
 	}
 	
+	
+	
 	/**
 	* createCenterPanel - creates the panel for the center.
 	* 	 
 	* @return			  a JPanel for the center.                
 	*/
-	
 	private JPanel createCenterPanel()
 	{
 		
@@ -175,6 +165,8 @@ public class PanelSklett implements Observer{
 	    
 	    return panel;    
 	}
+	
+	
 	
 
 	/**
@@ -332,12 +324,12 @@ public class PanelSklett implements Observer{
 	    return panel;
 	}
 	
+	
 	/**
 	* createGardenPanel - creates the panel for the garden.
 	* 	 
 	* @return			  a JPanel for the garden.                
 	*/
-	
 	private JPanel createGardenPanel()
 	{
 		Sound.stopSound();
@@ -505,7 +497,6 @@ public class PanelSklett implements Observer{
 	* 	 
 	* @return			  a JPanel for inventory.                
 	*/
-	
 		public void createInventoryPanel()
 		{
 			JFrame inventory = new JFrame("Ryggsäck");
