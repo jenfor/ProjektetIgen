@@ -102,7 +102,7 @@ public class PanelSklett implements Observer{
 		if(current.equals("center")) panelClickable = createCenterPanel();
 		else if(current.equals("shop")) panelClickable = createShopPanel();
 		else if(current.equals("garden")) panelClickable = createGardenPanel();
-		else panelClickable = createMiniGamePanel();
+		//else panelClickable = createMiniGamePanel();
 		
 		return panelClickable;
 	}
@@ -171,10 +171,6 @@ public class PanelSklett implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				//ui.changeRoom("garden");					//strängar ist. för rumsreferenser
-				//engine.changeCurrentRoom(engine.garden);	//rumsreferenser ist. för strängar
-				//engine.changeRoom("garden");				//flyttat till engine
 				new MiniGame();
 			}
 		});
@@ -660,7 +656,7 @@ public class PanelSklett implements Observer{
 	//*************************************************************************************************
 	
 	
-	
+	/*
 	private JPanel createMiniGamePanel()
 	{
 		JPanel panel = new JPanel();
@@ -671,7 +667,7 @@ public class PanelSklett implements Observer{
 		return panel;
 		
 	}
-	
+	*/
 	public void update(Observable obj, Object arg)
 	{
 		Item temp; //-------

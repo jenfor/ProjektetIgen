@@ -2,15 +2,10 @@ package NyaProjektarbetet;
 
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -67,11 +62,8 @@ public class Mole extends JButton implements ActionListener {
         setIcon(molePic);
         addActionListener(this);
         
-
         animStartTime = System.nanoTime() / 1000000;
-        //this.setText("Stop Animation");
         timer.start();
-        
     }
     
     /**
@@ -95,15 +87,15 @@ public class Mole extends JButton implements ActionListener {
                 timer.stop();
 
                 // Om den klickade mullvadens tal = rätt svar, lägg till 10 poäng
-                if(moleAns.equals(miniGame.getMathSolutionString())){
+                if(moleAns.equals(miniGame.miniGameActions.getMathSolutionString())){
                 	actions.updateScore(miniGame.getPointsSoFarText());
                 	Sound.playSomeSound("coin.wav");
                 	miniGame.createMole();
                 }
                 //Förlorar vid 5 fel
-                else if(miniGame.getWrongAnswers() > 3){
+                else if(miniGame.miniGameActions.getWrongAnswers() > 3){
                 	miniGame.tryAgain();
-                	miniGame.setWrongAnswers();
+                	miniGame.miniGameActions.setWrongAnswers();
                 }
                 else{
                 	//miniGame.pan2.remove(this);

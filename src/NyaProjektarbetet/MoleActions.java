@@ -12,14 +12,14 @@ public class MoleActions {
 	}
 
 	public void updateScore(JTextArea a) {
-		miniGame.setScore(10);
-		a.setText("\n " + rightAns + miniGame.getScore());
+		miniGame.miniGameActions.setScore(10);
+		a.setText("\n " + rightAns + miniGame.miniGameActions.getScore());
 	}
 	
 	public void wrongAnswere(JTextArea a) {
-		miniGame.setScore(-2);
-		miniGame.setWrongAnswers();
-    	System.out.println(" Fel: " + miniGame.getWrongAnswers());
-		a.setText("\n " + rightAns + miniGame.getScore());
+		miniGame.miniGameActions.setScore(-2);
+		miniGame.miniGameActions.setWrongAnswers();
+    	System.out.println(" Fel: " + miniGame.miniGameActions.getWrongAnswers());
+		a.setText("\n " + rightAns + miniGame.miniGameActions.getScore());
 	}
 }

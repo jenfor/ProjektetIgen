@@ -32,25 +32,30 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
     public Image grass;
      
 	public static JTextArea pointsSoFarText = new JTextArea();
-	private static int mathSolution = 0;
-	private static int product1 = 0;
-	private static int product2 = 0;
+	//private static int mathSolution = 0;
+	//private static int product1 = 0;
+	//private static int product2 = 0;
 	
-	public static JTextArea mathProblem = new JTextArea();
+	private static JTextArea mathProblem = new JTextArea();
     
     
-    private boolean start = false;
+   // private boolean start = false;
     static boolean cursorClick = false;
     
-    private int wrongAnsweres;
-    private int score;
+   // private int wrongAnsweres;
+    //private int score;
+    public MiniGameActions miniGameActions;
 
     public MiniGame()
     {
+    	miniGameActions = new MiniGameActions(this);
+    	//this.miniGamePanel = miniGamePanel;
+    	
+    	//miniGamePanel.createMiniWindow();
+    	
     	window = new JFrame ("Whack A Mole-spel");
 		pan = new JPanelWithBackground("pictures/falt.jpg");
 
-		//miniGame = new MiniGame();
     	
     	ImageIcon end = new ImageIcon("pictures/avsluta.png");
     	ImageIcon inst = new ImageIcon("pictures/instruk.png");
@@ -98,13 +103,6 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
         cash.setContentAreaFilled(false);
         cash.setBorderPainted(false);
         
-        /*
-    	closeB.setPreferredSize (new Dimension (100, 100));
-    	startB.setPreferredSize (new Dimension (100, 100));
-    	instructB.setPreferredSize (new Dimension (100, 100));
-    	cash.setPreferredSize (new Dimension (130, 130));
-    	text.setPreferredSize (new Dimension (80, 80));
-    	*/
     	pan.add(closeB);
     	pan.add(instructB);
     	pan.add(startB);
@@ -119,7 +117,7 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 		if (e.getSource() == startB)
 		{
 		    //ersätt innhållet i pan med spelet
-			start = true;
+			//start = true;
 	    	window.remove(pan);
 
 	    	Sound.playSomeSound("Randomize27.wav");
@@ -155,10 +153,10 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
         pan2.addMouseListener(this);
 		
         // ändrar texten i textrutorna
-    	pointsSoFarText.setPreferredSize (new Dimension (40, 40));
+    	//pointsSoFarText.setPreferredSize (new Dimension (40, 40));
     	pointsSoFarText.setFont(new Font("Serif", Font.BOLD, 28));
     	
-    	mathProblem.setPreferredSize (new Dimension (40, 40));
+    	//mathProblem.setPreferredSize (new Dimension (40, 40));
     	mathProblem.setFont(new Font("Serif", Font.BOLD, 50));
 
     	window.pack();
@@ -207,58 +205,7 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
-    public JTextArea getPointsSoFarText()
-    {
-    	return pointsSoFarText;
-    }
-    
-    public JTextArea getMathProblemTextArea()
-    {
-    	return mathProblem;
-    }
-    
-    
-    private void createMathProblemSolution(){
-    	Random rand = new Random();
-    	product1 = rand.nextInt(11); 
-    	product2 = rand.nextInt(11); 
-    	
-    	mathSolution = product1 * product2;
-    	mathProblem.setText(getMathProblemString());
-    }
-    
-    private String getMathProblemString(){
-    	String mathProbText = ("\n      " + product1 + "x"+ product2);
-    	return mathProbText;
-    }
-    
-    public String getMathSolutionString(){
-    	String solution = ("" + mathSolution);
-    	return solution;
-    }
-    
-    public int getWrongAnswers(){
-    	return wrongAnsweres;
-    }
-    
-    public void setWrongAnswers(){
-    	if(wrongAnsweres > 3){
-    		wrongAnsweres = 0;
-    	}
-    	else{
-    		wrongAnsweres += 1;
-    	}
-    }
-    
-    public int getScore(){
-    	return score;
-    }
 
-    public void setScore(int value){
-    	score += value;
-    }
-    
     //senare ver, tar in int som anger multitabell
 	public void createMole(){
     	int a = 1;
@@ -300,8 +247,8 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
         		pan2.add(emptyButton);
     		}
     		else if( i == j ){
-    			createMathProblemSolution();
-    			Mole moleIm = new Mole(getMathSolutionString(),this);
+    			miniGameActions.createMathProblemSolution();
+    			Mole moleIm = new Mole(miniGameActions.getMathSolutionString(),this);
    
 	    		moleIm.setBounds(100,a,100, 100);
 	        	pan2.add(moleIm);
@@ -337,4 +284,13 @@ public class MiniGame extends Room implements ActionListener,MouseListener{
 		
 		System.out.println("add replay");
 	}
+    public JTextArea getPointsSoFarText()
+    {
+    	return pointsSoFarText;
+    }
+    
+    public JTextArea getMathProblemTextArea()
+    {
+    	return mathProblem;
+    }
 }
