@@ -75,7 +75,7 @@ public class Garden extends Room implements Serializable{
 	/**
 	* getPicture - gets the backgroundpicture for garden.
 	*
-	* @param  	current the name of the the current room	
+	* @param  current 	the name of the the current room	
 	* @return			a string that represents the backgroundpicture for garden.                
 	*/
 	public String getPicture(String current)

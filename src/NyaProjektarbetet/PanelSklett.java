@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-//import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,9 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 
@@ -48,10 +46,9 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 /**
  * This class makes different panels for different rooms.
  * 
- * @author 
+ * @author Fifi, Linn, Jenny (Fifi har gjort inventoryPanel, Linn har gjort shopPanel och centerPanel, Jenny har gjort gardenPanel och getPanel )
  * @version 2015-03-04
  */
-
 
 public class PanelSklett implements Observer{
 	private GameEngine engine;
@@ -62,59 +59,41 @@ public class PanelSklett implements Observer{
 	private HashMap<Item, JButton> panelButtons2 = new  HashMap<Item, JButton>();
 	private HashMap<String, Integer> rightPanel = new  HashMap<String, Integer>();
 	
-
 	private ShopController shopControl;
-	public GardenController gardenController;
-	//public Inventory in = new Inventory();
-	//public JButton itemsLeft = null;
-	public JButton itemsLeft2;
+	private GardenController gardenController;
+	private JButton itemsLeft2;
 	
 	
 	
 	public PanelSklett(GameEngine e, UserInterface ui)
 	{
 		engine = e;
-		//this.ui = ui;
-		/*center = new Center();		//har flyttat dessa till gameengine istället
-		garden = new Garden();		
-		miniGame1 = new MiniGame();	*/
 		shopControl = new ShopController(engine, this);
-		/*
-		center = new Center();
-		shop = new Shop();
-		garden = new Garden();
-		miniGame1 = new MiniGame();*/
-
 		gardenController = new GardenController(e.userInventory, engine);
 		gardenController.addObserver(this);
-		//engine.userInventory.addObserver(this);
 		
-		//engine.getPlayer().myInventory
 	}
-	
-	/*
-	private JPanel getInventoryPanel()
-	{
-		panelClickable = createInventoryPanel();
-		return panelClickable;
-		
-	}*/
-	
-	/*
-	 private void reSize(int windowchanges)
-	 {
-		 
-	 }*/
-	
+	/**
+	* getPanel - gets the right panel for the right room.
+	*
+	* @param  	current 	the name of the the current room.
+	* 	 
+	* @return			    a JPanel for the current room.                
+	*/
 	public JPanel getPanel(String current)
 	{
 		if(current.equals("center")) panelClickable = createCenterPanel();
 		else if(current.equals("shop")) panelClickable = createShopPanel();
 		else if(current.equals("garden")) panelClickable = createGardenPanel();
-		//else panelClickable = createMiniGamePanel();
-		
+			
 		return panelClickable;
 	}
+	
+	/**
+	* createCenterPanel - creates the panel for the center.
+	* 	 
+	* @return			  a JPanel for the center.                
+	*/
 	
 	private JPanel createCenterPanel()
 	{
@@ -127,13 +106,10 @@ public class PanelSklett implements Observer{
         Font font = new Font("Viner Hand ITC", Font.BOLD, 25);
         
         
-        
 	   	JPanel panel = new JPanel();    
 	    panel.setOpaque(false);
-	    //panel.setLayout(new GridLayout(4,4));
 	    panel.setLayout(null);
 	    
-
 	    //Tar in skyltbilden, skalar om den, sparar som newIcon
     	URL imageURL = this.getClass().getClassLoader().getResource("skylt.png");
     	ImageIcon icon = new ImageIcon(imageURL);
@@ -147,10 +123,7 @@ public class PanelSklett implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				//ui.changeRoom("shop");					//strängar ist. för rumsreferenser
-				//engine.changeCurrentRoom(engine.shop);	//rumsreferenser ist. för strängar
-				engine.changeRoom("shop");				//flyttat till engine
+				engine.changeRoom("shop");				
 				
 			}
 		});
@@ -169,10 +142,7 @@ public class PanelSklett implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				//ui.changeRoom("garden");					//strängar ist. för rumsreferenser
-				//engine.changeCurrentRoom(engine.garden);	//rumsreferenser ist. för strängar
-				engine.changeRoom("garden");				//flyttat till engine
+				engine.changeRoom("garden");			
 				
 			}
 		});
@@ -203,14 +173,15 @@ public class PanelSklett implements Observer{
 	    clickButton3.setBorderPainted(false); //med eller utan kant
 	    panel.add(clickButton3);
 	    
-	    return panel;
-    
-    
+	    return panel;    
 	}
 	
-//*************************************************************************************************
-//*************************************SHOP-PANEL START*********************************************
-//*************************************************************************************************
+
+	/**
+	* createShopPanel - creates the panel for the shop.
+	* 	 
+	* @return			  a JPanel for the shop.                
+	*/
 	private JPanel createShopPanel()
 	{
 		HashMap<Item, Boolean> shopItems = engine.shop.getShopItems();
@@ -232,8 +203,7 @@ public class PanelSklett implements Observer{
 	    
 	    
 	    //**************************Skapa knappar**************************
-	    //Ska lägga till funktion som gör oköpbara föremål typ grå eller liknande
-	    
+	    	    
 	    for(Item item : shopItems.keySet() ){ 
 	    	
 	    	ImageIcon icon;
@@ -247,8 +217,6 @@ public class PanelSklett implements Observer{
 		    	icon = new ImageIcon(imageURL);
 	    	}
 	    	
-	    	/*URL imageURL = this.getClass().getClassLoader().getResource(item.getItemPicture());
-	    	ImageIcon icon = new ImageIcon(imageURL);*/
 	    	Font font = new Font("Verdana", Font.BOLD, 12);
 	    	JButton tempButton = new JButton (item.getItemName(), icon);
 	    	tempButton.setFont(font);
@@ -264,15 +232,10 @@ public class PanelSklett implements Observer{
 	    	}
 	    	itemText.setHorizontalAlignment(JTextField.CENTER);
 	    	itemText.setEditable(false);
-	    	//itemText.setOpaque(true);	
 	    	itemText.setOpaque(false);	
 	    	itemText.setFont(font);
-	    	//itemText.setBackground(Color.BLACK);
 	    	itemText.setForeground(Color.white);
 	    	itemText.setBorder(null);
-	    	
-	    	
-	    	
 	    	
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
@@ -283,7 +246,6 @@ public class PanelSklett implements Observer{
 	    	
 	    	itemGrid.add(tempButton);
 	    	itemGrid.add(itemText);
-
 	    	
 	    	tempButton.addActionListener(new ActionListener()  {
 				@Override
@@ -299,9 +261,6 @@ public class PanelSklett implements Observer{
 				}
 			});
 	    	
-	    	//gridPanel.add(tempButton);	//lägger till knappen -------------------------------
-	    	//gridPanel.add(tempLabel);-------------------------------
-	    	
 	    	gridPanel.add(itemGrid);
 	    	itemButtons.add(tempButton); //sparar knappen i en arraylist för att man ska kunna leta igenom knapparna
 		}
@@ -311,7 +270,6 @@ public class PanelSklett implements Observer{
 	    int buffer = 25 - shopItems.size();
 	    int j = 0;
 	    for(j = 1; j <= buffer; j++ ){ //lägger till tomma knappar för att fylla skärmen
-	    	//JButton tempButton = new JButton ("Item nr " + j);
 	    	JButton tempButton = new JButton ();
 	    	tempButton.setContentAreaFilled(false);
 	    	tempButton.setBorderPainted(false);
@@ -321,33 +279,20 @@ public class PanelSklett implements Observer{
 	    
 	  //**************************Övriga menyknappar etc**************************
 	    Font menuFont = new Font("Verdana", Font.BOLD, 16);
-	    
-	    /*
-	    moneyLabel = new JButton ("Du har " + engine.getPlayer().getMoney() + " kr.");
-	    moneyLabel.setContentAreaFilled(false);
-	    moneyLabel.setFont(menuFont);
-	    moneyLabel.setForeground(Color.white);
-	    //centrumButton.setBounds(4,6,100,200);
-	    //centrumButton.setBorderPainted(false); //med eller utan kant
-	    downPanel.add(moneyLabel);*/
-	    
 	   
 	    JButton centrumButton = new JButton ("Tillbaka till centrum");
 	    centrumButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//ui.changeRoom("center");
-				//engine.changeCurrentRoom(engine.center);		//rumsreferenser ist. för strängar
-				engine.changeRoom("center");				//flyttat till engine
+				
+				engine.changeRoom("center");	
 				
 			}
 		});
 	    centrumButton.setContentAreaFilled(false);
 	    centrumButton.setFont(menuFont);
 	    centrumButton.setForeground(Color.white);
-	    //centrumButton.setBounds(4,6,100,200);
-	    //centrumButton.setBorderPainted(false); //med eller utan kant
 	    downPanel.add(centrumButton);
 	    
 	    JButton gardenButton = new JButton ("Till trädgården");
@@ -355,17 +300,14 @@ public class PanelSklett implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//ui.changeRoom("garden");
-				//engine.changeCurrentRoom(engine.garden);		//rumsreferenser ist. för strängar
-				engine.changeRoom("garden");				//flyttat till engine
+				engine.changeRoom("garden");			
 				
 			}
 		});
+	    
 	    gardenButton.setFont(menuFont);
 	    gardenButton.setForeground(Color.white);
 	    gardenButton.setContentAreaFilled(false);
-	    //gardenButton.setBounds(4,6,100,200);
-	    //gardenButton.setBorderPainted(false); //med eller utan kant
 	    downPanel.add(gardenButton);
 	    
 	    JButton inventoryButton = new JButton ("Ryggsäck");
@@ -377,12 +319,11 @@ public class PanelSklett implements Observer{
 				
 			}
 		});
+	    
 	    inventoryButton.setContentAreaFilled(false);
 	    inventoryButton.setFont(menuFont);
 	    inventoryButton.setForeground(Color.white);
 	    
-	    //clickButton2.setBounds(300,400,200,200);
-	    //clickButton.setBorderPainted(false); //med eller utan kant
 	    downPanel.add(inventoryButton);
 	    
 	    panel.add(gridPanel, BorderLayout.CENTER);
@@ -390,10 +331,12 @@ public class PanelSklett implements Observer{
 
 	    return panel;
 	}
-//*************************************************************************************************
-//*************************************SHOP-PANEL END***********************************************
-//*************************************************************************************************
 	
+	/**
+	* createGardenPanel - creates the panel for the garden.
+	* 	 
+	* @return			  a JPanel for the garden.                
+	*/
 	
 	private JPanel createGardenPanel()
 	{
@@ -410,9 +353,7 @@ public class PanelSklett implements Observer{
 	    int rad = 0;
 	    int column =0;
 	    int lopnr=0;
-	    
-	    //HashMap<Item, Integer> inventory = gardenController.getInventory();
-	    
+	      
 	    HashMap<Item, Integer> inventory = engine.userInventory.getInventory();
 	    gardenController.setInventory(engine.userInventory);
 	    
@@ -423,13 +364,13 @@ public class PanelSklett implements Observer{
         }
         
 	    
-	    // Det osynlliga rutnätet med knappar
+	    // Skapar det osynlliga rutnätet med knappar
 	    
 	    for( int j=0;j<43;j++){    	
 	    		    
 		    for( int i=0;i<23;i++)
 		    {
-		    	lopnr++;// Varje knapp får ett eget nummer			    		    
+		    	lopnr++;// Varje knapp får ett eget nummer för att kunna lokalisera dess position		    		    
 			    final int nr = lopnr;
 			    
 			    String s = "buildable"; // Kom ihåg om det finns en tegelsten här eller inte...
@@ -437,85 +378,55 @@ public class PanelSklett implements Observer{
 			    final String startState = s;
 			    
 			    final ImageIcon icon3;
-			    //ImageIcon icon3;
 			    if (gardenController.getIcon(nr)!= null)
 			    {
-			    	//URL iconString = this.getClass().getClassLoader().getResource(gardenController.getIcon(nr));
-			    	//URL iconString = this.getClass().getClassLoader().getResource("pictures/BrickBlue.png");
-			    	//icon3 = new ImageIcon(gardenController.getIcon(nr));
-			    	//System.out.println("gardenController.getIcon(nr) är just nu = " +gardenController.getIcon(nr));
-			    	//icon3 = new ImageIcon(/*gardenController.getIcon(nr)*/"pictures/BrickBlue.png");
-			    	//System.out.println(("pictures/" + gardenController.getIcon(nr)));
 			    	icon3 = new ImageIcon("pictures/" + gardenController.getIcon(nr));
 			    	
 			    }
 			    else
 			    	icon3 =null;
-			    //final ImageIcon icon3 = new ImageIcon(iconString);
-			    
-			    
-			   /* if (this.getClass().getClassLoader().getResource(gardenController.getIcon(nr))!= null)
-			    {
-			    	iconString =this.getClass().getClassLoader().getResource(gardenController.getIcon(nr));
-			    	icon3= new ImageIcon(iconString);
-			    }
-		    		    
-			    else{  icon3 = null;}
-			    */
-			    //ImageIcon icon3 = new ImageIcon(gardenController.getIcon(nr));
-		    	
+			   
 		    				    
 			    final JButton clickButton = new JButton(icon3);
-			    //setResizable(false);// Testa senare
+			    
 			    clickButton.setBounds(column,rad,30,30);
 			    clickButton.setContentAreaFilled(false);//Osynlighet
 			    clickButton.setBorderPainted(false);//Osynlighet
 			    clickButton.addActionListener(new ActionListener() {
 			    	
-			    	String state = startState;
+			    	String state = startState; // Håller koll på om det går att bygga eller om det redan finns en tegelsten där
 			    	String takenImageString;
 			    	ImageIcon takenImage; 
-			    	//String state ="buildable";
+			    	
 			    	@Override
 					public void actionPerformed(ActionEvent arg0) {
 			    		
 			    		
 						if(state.equals("buildable"))
 						{
-							takenImageString = gardenController.getTakenImage();
+							takenImageString = gardenController.getTakenImage();// Hämta stringen för den bild på tegelsten som användaren valt
 							takenImage = new ImageIcon("pictures/" +takenImageString);
-							if(takenImage!=null)
+							if(takenImage!=null && (gardenController.getTakenImage())!=null)
 							{
 								state="unbuildable";
-								//System.out.println("Bilden som följde med till Panelskletts rutnät är: : " +takenImage );
-								if(gardenController.getTakenImage()!=null)
-								{
-									checkRightPanel(takenImageString);
-									clickButton.setIcon(takenImage);
-									gardenController.build(nr);
-									takenImage = null;
-								}
-								
-							}
-														
+								clickButton.setIcon(takenImage);
+								gardenController.build(nr);
+								takenImage = null;
+							}						
 						}
 	
 						else if(state.equals("unbuildable"))
 					    {
 							state="buildable";
-							checkRightPanel(takenImageString);
 							clickButton.setIcon(null);
 							clickButton.setContentAreaFilled(false);
 							gardenController.remove(nr);
 						}
 					}
-					
 			    });	
 					
 			    panel.add(clickButton);
-			    
-			    rad = rad + 30;
-			    			   	    		    
+			    rad = rad + 30;    		    
 		    }
 		   
 		    column = column + 30;
@@ -532,120 +443,72 @@ public class PanelSklett implements Observer{
 	    int buttonNr=0;
 	    
 	    // Nollställer för ny loop
-	     rad = 30;
-	     column = 30;
-	   
-	 
+	    rad = 30;
+	    column = 30;
+   
+        //Fixar fram det som ska visas på sidopanelen
+        for(Entry<Item, Integer> entry: pairs){
+	        buttonNr++;
+	        	
+	        final int bNr = buttonNr;
+	    	// Visa bilder på tillgänliga Item
+	        final Item item= entry.getKey();	
 	        
-	   
-	        //Fixar fram det som ska visas på sidopanelen
-	        for(Entry<Item, Integer> entry: pairs){
-		        	buttonNr++;
-		        final int bNr = buttonNr;
-		    	// Visa bild på tillgänliga Item
-		        final Item item= entry.getKey();	
-		        
-		        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
-		    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
-		    	rightPanel.put(item.getItemPicture(), buttonNr);
-		    	
-		    	//final ImageIcon imageOfItem = entry.getKey();
-		    	//System.out.println("imageOfItem i sidopanelen" +imageOfItem );
-		    	final JButton showItem;
-		    	showItem = new JButton(imageOfItem);
-			    showItem.setBounds(column, rad,30,30);
-			    
-			    //Vad bildknappen ska göra
-			    
-			    showItem.addActionListener(new ActionListener() {
+	        URL imageOfItemString = this.getClass().getClassLoader().getResource(item.getItemPicture());
+	    	final ImageIcon imageOfItem= new ImageIcon(imageOfItemString);
+	    	rightPanel.put(item.getItemPicture(), buttonNr);
+	    	
+	    	final JButton showItem;
+	    	showItem = new JButton(imageOfItem);
+		    showItem.setBounds(column, rad,30,30);
+		    
+		    //Vad bildknappen ska göra
+		    showItem.addActionListener(new ActionListener() {
 			    	    	
 			    	@Override
 					public void actionPerformed(ActionEvent arg0) {
 												
 							gardenController.take(item.getItemPicture());
 							presentItem = bNr;
-							//System.out.println("Tagen bild i sidopanelen är: " +imageOfItem );
 					}
 					
 			    });	
 			    
-			    
-			    
-			    //Visa antal  tillgänliga Items
-			    itemsLeft2 = new JButton();
-			    itemsLeft2.setText("" + entry.getValue());
-			    itemsLeft2.setBounds(column-2, rad+30,60,30);
-			    itemsLeft2.setContentAreaFilled(false);//Osynlighet
-			    itemsLeft2.setBorderPainted(false);//Osynlighet
-			    showInventory.add(itemsLeft2);
-			    
-			    
-			    // Visa antal  tillgänliga Items
-			    /*int x = entry.getValue();
-			    itemsLeft = new JButton();
-			    itemsLeft.setText("" + x);
-			    itemsLeft.setBounds(column-15, rad+30,60,30);
-			    itemsLeft.setContentAreaFilled(false);//Osynlighet
-			    itemsLeft.setBorderPainted(false);//Osynlighet*/
-			    //panelButtons.put(buttonNr, itemsLeft);
-			    //showInventory.add(itemsLeft);
-			    
-			    
-			    
-			    //Spara referens till just denna rutan
-			    
-			    panelButtons2.put(item, itemsLeft2);
-			    
-			     
-			    //*****************************************************************
-			    
-			   		    
-			    //Lägg till bild och antal 
-			    showInventory.add(showItem);
-			    
-			    // Byt till ny position
-			    rad= rad +60;
-	    }
+	    //Visa antal  tillgänliga Items
+	    itemsLeft2 = new JButton();
+	    itemsLeft2.setText("" + entry.getValue());
+	    itemsLeft2.setBounds(column-2, rad+30,60,30);
+	    itemsLeft2.setContentAreaFilled(false);//Osynlighet
+	    itemsLeft2.setBorderPainted(false);//Osynlighet
+	    showInventory.add(itemsLeft2);
+	    			    
+	    
+	    //Spara referens till just denna rutan
+	    panelButtons2.put(item, itemsLeft2);
+	     
+	   		    
+	    //Lägg till bild och antal på panelen vid sidan av rutnätet
+	    showInventory.add(showItem);
+	    
+	    // Byt till ny position
+	    rad= rad +60;
+    }
 	        
-	        		    
-		   //*****************************************************************
-		    
+	      	    
 	     panel.add(showInventory);
 	     return panel;
 	     
-	}
+}
 	
+	/**
+	* createInventoryPanel - creates the panel for inventory.
+	* 	 
+	* @return			  a JPanel for inventory.                
+	*/
 	
-	public void checkRightPanel(String picture)
-	{
-		if(gardenController.getTakenImage()!=(null))
-		{
-			
-		}
-		if( rightPanel.containsKey(picture))
-		{ 
-			int nr = rightPanel.get(picture);
-			if (presentItem!= nr)
-			{
-				presentItem = nr;
-			}
-			
-		}
-				
-	
-		
-	}
-	
-	//*************************************************************************************************
-	//*************************************INVENTORY-PANEL START***************************************
-	//*************************************************************************************************
-	
-	
-	//Ganska klart förutom layouten
 		public void createInventoryPanel()
 		{
 			JFrame inventory = new JFrame("Ryggsäck");
-			//HashMap<Item, Integer> items = inventoryItems.getInventory();
 			HashMap<Item, Integer> items = engine.getPlayer().myInventory.getInventory();
 			
 			JPanelWithBackground invBG = new JPanelWithBackground("pictures/inventoryBG.jpg");
@@ -660,10 +523,6 @@ public class PanelSklett implements Observer{
 		    invBG.add(new JLabel("Ryggsäck"));
 			
 			for (Entry<Item, Integer> entry : items.entrySet() ) {
-			//for (HashMap.Entry<Item, Integer> entry : items.entrySet() ) {
-			    //Item item = entry.getKey();
-			    //Object amount = entry.getValue();
-				//ImageIcon iconapprove = new ImageIcon(entry.getKey().getItemPicture());
 				
 				if(entry.getKey().getItemLevel() <= engine.getPlayer().getLevel()){
 					URL imageURL = this.getClass().getClassLoader().getResource(entry.getKey().getItemPicture());
@@ -680,141 +539,23 @@ public class PanelSklett implements Observer{
 			inventory.setVisible(true);
 		}
 	
-	
-	//*************************************************************************************************
-	//*************************************INVENTORY-PANEL END*****************************************
-	//*************************************************************************************************
-	
-	
-	/*
-	private JPanel createMiniGamePanel()
-	{
-		JPanel panel = new JPanel();
-		
-		panel.setOpaque(false);
-	    panel.setLayout(null);
-		
-		return panel;
-		
-	}
+	/**
+	* update - updates gardenpanel when inventory changes.
+	*
+	* @param  	obj   the inventory that chages.
+	* @param	arg	  the item which is moved between inventory and garden                 
 	*/
 	public void update(Observable obj, Object arg)
 	{
-		Item temp; //-------
+		Item temp; 
 		temp = new Item(200, 2, "fish.png", "tomt item");
-		
-		/*if(obj instanceof GardenController && arg instanceof Integer)
-		{
-			panelButtons.get(presentItem).setText("" + arg);
-			//itemsLeft.setText("" + arg);
-			kurt.setText("kvar:"+ arg);
-		}*/
 		
 		if ( obj instanceof Inventory && arg instanceof Item ){
 			temp = (Item)arg;
 			if(panelButtons2.get(arg) != null)
 				panelButtons2.get(arg).setLabel("" + engine.userInventory.getInventory().get(temp));
 		}
-		
 			
 	}
 }
 	
-	
-	
-	
-	/*
-	private JPanel createGardenPanel()
-	{
-		JPanel panel = new JPanel(); 
-		panel.setOpaque(false);
-	    panel.setLayout(null);
-	    int rad = 0;
-	    int column =0;
-	    int i =0;
-	    int j = 0;
-	    
-	    for( j=0;j<43;j++){    	
-	    		    
-		    for( i=0;i<23;i++)
-		    {
-		    		   
-			    final JButton clickButton = new JButton ();
-			    clickButton.setContentAreaFilled(false);
-			    clickButton.setBounds(column,rad,30,30);
-			     
-			    clickButton.setBorderPainted(false);//Osynlig
-			    clickButton.addActionListener(new ActionListener() {
-			    	int option =1;
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						
-						if(option ==1){
-							option=0;
-							clickButton.setContentAreaFilled(true);
-						}
-	
-						else if(option ==0)
-					    {
-						option =1;
-						clickButton.setContentAreaFilled(false);
-						}
-						
-					}
-					
-			    });	
-					
-			    panel.add(clickButton);
-			    
-			    rad = rad + 30;
-			    			   	    		    
-		    }
-		    /*rad = 0;
-		    i=0;
-		    for( i=0;i<23;i++)
-		    {
-		    		   
-			    JButton clickButton = new JButton ();
-			    clickButton.setContentAreaFilled(false);
-			    clickButton.setBounds(30,rad,30,30);
-			    //clickButton.setContentAreaFilled(false); Synlig för tillfället så jag ser vad jag gör
-			    panel.add(clickButton);
-			    
-			    rad = rad + 30;
-			    			   	    		    
-		    }
-		    column = column + 30;
-		    i=0;
-		    rad =0;
-			 
-			   	    		    
-		}
-	   
-		    
-		return panel;
-			
-	}
-	
-	private JPanel createMiniGamePanel()
-	{
-		JPanel panelClickable = new JPanel();
-		
-		panelClickable.setOpaque(false);
-	    panelClickable.setLayout(null);
-		
-		return panelClickable;
-	}
-	
-	private JPanel createInventoryPanel()
-	{
-		panelClickable.setOpaque(false);
-	    panelClickable.setLayout(null);
-		
-		return panelClickable;
-	}
-	
-	
-}*/
-
-
